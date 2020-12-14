@@ -2,9 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Model\Department;
+use App\Model\Employee;
+use App\Model\Position;
+use App\Repositories\DepartmentRepository;
+use App\Repositories\PositionRepository;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 use Prettus\Validator\Contracts\ValidatorInterface;
 use Prettus\Validator\Exceptions\ValidatorException;
 use App\Http\Requests\EmployeeCreateRequest;
@@ -23,7 +30,8 @@ class EmployeesController extends Controller
      * @var EmployeeRepository
      */
     protected $repository;
-
+    protected $departmentRepository;
+    protected $position;
     /**
      * @var EmployeeValidator
      */
@@ -35,10 +43,13 @@ class EmployeesController extends Controller
      * @param EmployeeRepository $repository
      * @param EmployeeValidator $validator
      */
-    public function __construct(EmployeeRepository $repository, EmployeeValidator $validator)
+    public function __construct(DepartmentRepository $department, PositionRepository $position, DepartmentRepository $departmentRepository, EmployeeRepository $repository, EmployeeValidator $validator)
     {
+        $this->position = $position;
+        $this->department = $department;
         $this->repository = $repository;
-        $this->validator  = $validator;
+        $this->validator = $validator;
+        $this->departmentRepository = $departmentRepository;
     }
 
     /**
@@ -48,17 +59,7 @@ class EmployeesController extends Controller
      */
     public function index()
     {
-        $this->repository->pushCriteria(app('Prettus\Repository\Criteria\RequestCriteria'));
-        $employees = $this->repository->all();
 
-        if (request()->wantsJson()) {
-
-            return response()->json([
-                'data' => $employees,
-            ]);
-        }
-
-        return view('employees.index', compact('employees'));
     }
 
     /**
@@ -70,35 +71,33 @@ class EmployeesController extends Controller
      *
      * @throws \Prettus\Validator\Exceptions\ValidatorException
      */
-    public function store(EmployeeCreateRequest $request)
+    public function store(Request $request)
     {
         try {
-
-            $this->validator->with($request->all())->passesOrFail(ValidatorInterface::RULE_CREATE);
-
-            $employee = $this->repository->create($request->all());
-
-            $response = [
-                'message' => 'Employee created.',
-                'data'    => $employee->toArray(),
-            ];
-
-            if ($request->wantsJson()) {
-
-                return response()->json($response);
-            }
-
-            return redirect()->back()->with('message', $response['message']);
+            \DB::beginTransaction();
+            $data = $request->only(['ten', 'sodienthoai', 'diachi', 'gioitinh', 'macv', 'ngaybatdau', 'ngayketthuc']);
+            $this->validator->with($data)->passesOrFail(EmployeeValidator::RULE_CREATE);
+            $path = Storage::putFile('avatars', $request->file('imgProfile'));
+            $data['img'] = $path;
+            $employee = $this->repository->create($data);
+            $department = $this->department->find($request->department);
+            $department->employees()->attach($employee->id, ['position_id' => $request->macv]);
+            \DB::commit();
+            return redirect()->back()->with('message', "Thêm mới thành công");
         } catch (ValidatorException $e) {
-            if ($request->wantsJson()) {
-                return response()->json([
-                    'error'   => true,
-                    'message' => $e->getMessageBag()
-                ]);
-            }
-
             return redirect()->back()->withErrors($e->getMessageBag())->withInput();
+        } catch (\Exception $exception) {
+            \DB::rollBack();
+            report($exception);
+            return back()->withError($exception->getMessage())->withInput();
         }
+    }
+
+    public function displayFormAdd($id)
+    {
+        $departments = $this->department->where("parent_id", $id)->get();
+        $positions = $this->position->all();
+        return view('employees.add', compact('departments', 'positions'));
     }
 
     /**
@@ -108,18 +107,16 @@ class EmployeesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($id, $parent_id)
     {
-        $employee = $this->repository->find($id);
-
-        if (request()->wantsJson()) {
-
-            return response()->json([
-                'data' => $employee,
-            ]);
+        $departments = $this->department->where("parent_id", $parent_id)->get();
+        $positions = $this->position->all();
+        $employee = $this->repository->showInforEmployee($id);
+        $dpmSelect = $this->repository->with('departments')->where("employees.id", $id)->first();
+        foreach ($dpmSelect->departments as $id_child) {
+            $id_child_department = $id_child;
         }
-
-        return view('employees.show', compact('employee'));
+        return view('employees.update', compact('employee', 'departments', 'positions', 'id_child_department'));
     }
 
     /**
@@ -140,42 +137,36 @@ class EmployeesController extends Controller
      * Update the specified resource in storage.
      *
      * @param  EmployeeUpdateRequest $request
-     * @param  string            $id
+     * @param  string $id
      *
      * @return Response
      *
      * @throws \Prettus\Validator\Exceptions\ValidatorException
      */
-    public function update(EmployeeUpdateRequest $request, $id)
+    public function update(Request $request, $id)
     {
         try {
-
-            $this->validator->with($request->all())->passesOrFail(ValidatorInterface::RULE_UPDATE);
-
-            $employee = $this->repository->update($request->all(), $id);
-
-            $response = [
-                'message' => 'Employee updated.',
-                'data'    => $employee->toArray(),
-            ];
-
-            if ($request->wantsJson()) {
-
-                return response()->json($response);
+            \DB::beginTransaction();
+            $data = $request->only(['ten', 'sodienthoai', 'diachi', 'gioitinh', 'macv', 'ngaybatdau', 'ngayketthuc']);
+            $this->validator->with($data)->passesOrFail(EmployeeValidator::RULE_UPDATE);
+            if (isset($request->imgProfile)) {
+                $path = Storage::putFile('avatars', $request->imgProfile);
+            } else {
+                $path = $request->imgProfileOld;
             }
-
-            return redirect()->back()->with('message', $response['message']);
+            $data['img'] = $path;
+            $employee = $this->repository->update($data, $id);
+            $employees = $this->repository->find($id);
+            $employees->departments()->updateExistingPivot($request->department, ['position_id' => $request->post('macv')]);
+            \DB::commit();
+            return redirect()->back()->with('message', "Cập nhật thành công");
         } catch (ValidatorException $e) {
 
-            if ($request->wantsJson()) {
-
-                return response()->json([
-                    'error'   => true,
-                    'message' => $e->getMessageBag()
-                ]);
-            }
-
             return redirect()->back()->withErrors($e->getMessageBag())->withInput();
+        } catch (\Exception $exception) {
+            \DB::rollBack();
+            report($exception);
+            return back()->withError(["message" => $exception->getMessage()]);
         }
     }
 
@@ -187,18 +178,22 @@ class EmployeesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($id, $childDepartment_id)
     {
-        $deleted = $this->repository->delete($id);
-
-        if (request()->wantsJson()) {
-
-            return response()->json([
-                'message' => 'Employee deleted.',
-                'deleted' => $deleted,
-            ]);
+        try {
+            \DB::beginTransaction();
+            $deleted = $this->repository->delete($id);
+            $department = $this->department->find($childDepartment_id);
+            $department->employees()->detach($id);
+            \DB::commit();
+            return redirect()->back()->with('message', 'Xóa Thành Công');
+        } catch (\Exception $exception) {
+            \DB::rollback();
+            report($exception);
+            return back()->withError($exception->getMessage());
         }
-
-        return redirect()->back()->with('message', 'Employee deleted.');
     }
+
+
+
 }

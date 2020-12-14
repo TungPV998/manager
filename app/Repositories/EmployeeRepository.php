@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use phpDocumentor\Reflection\Types\Void_;
 use Prettus\Repository\Contracts\RepositoryInterface;
 
 /**
@@ -11,5 +12,14 @@ use Prettus\Repository\Contracts\RepositoryInterface;
  */
 interface EmployeeRepository extends RepositoryInterface
 {
-    //
+    /**
+     * @param $id
+     */
+    public function listEmployees($id);
+
+    /**
+     * @param $employee_id
+     */
+    public function showInforEmployee($employee_id);
+
 }

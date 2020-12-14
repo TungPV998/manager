@@ -1,0 +1,11 @@
+
+W	php:S1481Š"5Remove this unused "$childDepartment" local variable.(ááî²şÿÿÿÿ8óíä†å.
+j	php:S1192Z"IDefine a constant instead of duplicating this literal "message" 13 times.(Ÿûÿÿÿÿ8Ú¤ºã.
+h	php:S1192X"LDefine a constant instead of duplicating this literal "tenphongban" 3 times.(ºìæµ8İÙïáã.
+z	php:S1192]"YDefine a constant instead of duplicating this literal "Táº¡o má»›i tháº¥t báº¡i" 4 times.(‚š¥Çÿÿÿÿÿ8İÙïáã.
+;php:S125›"Remove this commented out code.(¨¦ğ8•ÕÑ‰å.
+k	php:S1192<"JDefine a constant instead of duplicating this literal "parent_id" 6 times.(æÒ„ƒüÿÿÿÿ8ŸœÜä.
+i	php:S1192["HDefine a constant instead of duplicating this literal "status" 12 times.(Ş¥¶ãÿÿÿÿÿ8ôä¤ºã.
+h	php:S1192V"LDefine a constant instead of duplicating this literal "txtPhongBan" 6 times.(¬Ê¨¤8Õ”’áã.
+@php:S125¿"Remove this commented out code.(–ÀîÌüÿÿÿÿ8óíä†å.
+@php:S125­"Remove this commented out code.(—˜“—üÿÿÿÿ8´ä‡Šå.

@@ -4,9 +4,9 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
 /**
- * Class CreateEmployeesTable.
+ * Class CreatePositionsTable.
  */
-class CreateEmployeesTable extends Migration
+class CreatePositionsTable extends Migration
 {
 	/**
 	 * Run the migrations.
@@ -15,9 +15,9 @@ class CreateEmployeesTable extends Migration
 	 */
 	public function up()
 	{
-		Schema::create('employees', function(Blueprint $table) {
+		Schema::create('positions', function(Blueprint $table) {
             $table->increments('id');
-
+            $table->string('tenchucvu')->nullable();
             $table->timestamps();
 		});
 	}
@@ -29,6 +29,6 @@ class CreateEmployeesTable extends Migration
 	 */
 	public function down()
 	{
-		Schema::drop('employees');
+		Schema::drop('positions');
 	}
 }

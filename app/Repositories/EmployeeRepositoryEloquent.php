@@ -2,10 +2,13 @@
 
 namespace App\Repositories;
 
+use App\Criteria\EmployeeRequestCriteria;
+use App\Model\Department;
+use Illuminate\Support\Facades\DB;
 use Prettus\Repository\Eloquent\BaseRepository;
 use Prettus\Repository\Criteria\RequestCriteria;
 use App\Repositories\EmployeeRepository;
-use App\Entities\Employee;
+use App\Model\Employee;
 use App\Validators\EmployeeValidator;
 
 /**
@@ -15,6 +18,12 @@ use App\Validators\EmployeeValidator;
  */
 class EmployeeRepositoryEloquent extends BaseRepository implements EmployeeRepository
 {
+    protected $fieldSearchable = [
+        'ten'=>'like',
+        'diachi'=>'like',
+        'position.tenchucvu'=>'like',
+
+    ];
     /**
      * Specify Model class name
      *
@@ -44,5 +53,20 @@ class EmployeeRepositoryEloquent extends BaseRepository implements EmployeeRepos
     {
         $this->pushCriteria(app(RequestCriteria::class));
     }
-    
+    public function showInforEmployee($employee_id){
+        return $this->with('positions')
+            ->whereHas("departments",function ($sql) use($employee_id){
+           return $sql->where("employees.id",$employee_id);
+        })->first();
+    }
+
+
+    public function listEmployees($department_id){
+        return $this->with('positions')
+            ->whereHas('departments',function($sql) use($department_id){
+            return $sql->where('departments.id',$department_id);
+        }) ->paginate();
+    }
+
+
 }
