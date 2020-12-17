@@ -32,4 +32,7 @@ class Department extends Model implements Transformable
     {
         return $this->hasMany(EmplyeeDepartment::class,'department_id');
     }
+    public function childs() {
+        return $this->hasMany(Department::class,'parent_id','id') ;
+    }
 }

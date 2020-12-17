@@ -43,7 +43,8 @@ class DepartmentsController extends Controller
      */
     public function __construct(DepartmentRepository $repository,
                                 DepartmentValidator $validator,
-                                EmployeeRepository $employee)
+                                EmployeeRepository $employee
+    )
     {
         $this->employee = $employee;
         $this->repository = $repository;
@@ -57,9 +58,19 @@ class DepartmentsController extends Controller
      */
     public function index()
     {
-       $departments = $this->repository->findWhere(['parent_id'=>0])->all();
-        return view('department.index',compact('departments'));
+        $departments = $this->repository->where('parent_id', '=', 0)->get();
+        $allDepartment = $this->repository->pluck('tenphongban','id')->all();
+        $htmlOption  = $this->repository->recursiveDepartment($parent_id='');
+        $view_data = [
+            'htmlOption'=>$htmlOption,
+            'departments'=>$departments,
+            'allDepartment'=>$allDepartment,
+        ];
+        return view('department.index',compact('view_data'));
+
     }
+
+
     /**
      * Hiển thị danh sách phong ban con.
      *
@@ -90,27 +101,21 @@ class DepartmentsController extends Controller
         try {
             $this->validator->with($request->only('txtPhongBan'))->passesOrFail(DepartmentValidator::RULE_CREATE);
             $tenphongban = $request->post('txtPhongBan');
-            $department = $this->repository->create(['tenphongban'=>$tenphongban,'parent_id'=>0]);
-            $response = $department ? [
-                'message' => "Tạo mới thành công",
-                'status' => 200,
-            ] : [
-                'message' => "Tạo mới thất bại",
-                'status' => 500,
-            ];
+            $department = $this->repository->create(['tenphongban'=>$tenphongban,'parent_id'=>$request->parent_id]);
+            if ($department) {
+                return back()->with('message', "Them moi thanh cong");
+            }
+            throw new \Exception('Xảy ra lỗi khi them moi phong ban');
+
         } catch (ValidatorException $e) {
-            $response = [
-                'status' => 422,
-                'message' => $e->getMessageBag()
-            ];
+            return back()->withInput($request->all())->withErrors($e->getMessageBag());
         }
-        catch(Exception $exception) {
-            $response = [
-                'message' => "Tạo mới thất bại",
-                'status' => 500,
-            ];
+     catch (\Exception $exception) {
+        report($exception);
+        return back()->with('message',"Them moi that bai" );
+
         }
-        return response()->json($response);
+
     }
 
     /**
@@ -120,33 +125,33 @@ class DepartmentsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function storeChildDepartment(Request $request,$id_parent)
-    {
-        try {
-            $this->validator->with($request->only('txtPhongBan'))->passesOrFail(DepartmentValidator::RULE_CREATE);
-            $tenphongban = $request->post('txtPhongBan');
-            $department = $this->repository->create(['tenphongban'=>$tenphongban,'parent_id'=>$id_parent]);
-            $response = $department ? [
-                'message' => "Tạo mới thành công",
-                'status' => 200,
-            ] : [
-                'message' => "Tạo mới thất bại",
-                'status' => 500,
-            ];
-        } catch (ValidatorException $e) {
-            $response = [
-                'status' => 422,
-                'message' => $e->getMessageBag()
-            ];
-        }
-        catch(Exception $exception) {
-            $response = [
-                'message' => "Tạo mới thất bại",
-                'status' => 500,
-            ];
-        }
-        return response()->json($response);
-    }
+//    public function storeChildDepartment(Request $request,$id_parent)
+//    {
+//        try {
+//            $this->validator->with($request->only('txtPhongBan'))->passesOrFail(DepartmentValidator::RULE_CREATE);
+//            $tenphongban = $request->post('txtPhongBan');
+//            $department = $this->repository->create(['tenphongban'=>$tenphongban,'parent_id'=>$id_parent]);
+//            $response = $department ? [
+//                'message' => "Tạo mới thành công",
+//                'status' => 200,
+//            ] : [
+//                'message' => "Tạo mới thất bại",
+//                'status' => 500,
+//            ];
+//        } catch (ValidatorException $e) {
+//            $response = [
+//                'status' => 422,
+//                'message' => $e->getMessageBag()
+//            ];
+//        }
+//        catch(Exception $exception) {
+//            $response = [
+//                'message' => "Tạo mới thất bại",
+//                'status' => 500,
+//            ];
+//        }
+//        return response()->json($response);
+//    }
 
     /**
      * Hiển thị danh sách nhân viên trongh phong ban
@@ -155,26 +160,28 @@ class DepartmentsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function showEmployee($id_department_child,$id_department_parent,BuildDataSearchForRequest $BuildDataSearchForRequest)
-    {
-        $BuildDataSearchForRequest = $BuildDataSearchForRequest
-            ->setSearch('', [
-                'ten' => 'name_employees',
-            ])
-            ->setOrderBy('id')
-            ->setSortedBy('desc');
-        $employees = $this->employee->with('positions')
-            ->whereHas('departments',function ($sql) use ($id_department_child){
-                return $sql->where('departments.id','=',$id_department_child);
-            })
-            ->pushCriteria(new EmployeeRequestCriteria($BuildDataSearchForRequest->getDataSearch()))
-            ->paginate();
-        $id_parent = $id_department_parent;
-        $id_child = $id_department_child;
-        $childDepartment = $this->repository->getInforChildDepartment($id_department_child);
-
-        return view('employees.index', compact('employees','id_parent','id_child','childDepartment'));
-    }
+//    public function showEmployee($id_department_child,$id_department_parent,BuildDataSearchForRequest $BuildDataSearchForRequest)
+//    {
+//        $BuildDataSearchForRequest = $BuildDataSearchForRequest
+//            ->setSearch('', [
+//                'ten' => 'name_employees',
+//                'departments.id' => 'departmentSlect',
+//            ])
+//            ->setSearchFields([''])
+//            ->setOrderBy('id')
+//            ->setSortedBy('desc');
+//        $employees = $this->employee->with('positions')
+//            ->whereHas('departments',function ($sql) use ($id_department_child){
+//                return $sql->where('departments.id','=',$id_department_child);
+//            })
+//            ->pushCriteria(new EmployeeRequestCriteria($BuildDataSearchForRequest->getDataSearch()))
+//            ->paginate();
+//        $id_parent = $id_department_parent;
+//        $id_child = $id_department_child;
+//        $childDepartment = $this->repository->getInforChildDepartment($id_department_child);
+//
+//        return view('employees.index', compact('employees','id_parent','id_child','childDepartment'));
+//    }
     /**
      * sửa ten phòng ban con
      *
@@ -197,8 +204,9 @@ class DepartmentsController extends Controller
     public function edit($id)
     {
         $department = $this->repository->find($id);
-
-        return view('departments.edit', compact('department'));
+       // dd($department->parent_id);
+        $htmlOption = $this->repository->recursiveDepartment($department->parent_id);
+        return view('department.edit', compact('department','htmlOption'));
     }
 
     /**

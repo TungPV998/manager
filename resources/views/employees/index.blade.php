@@ -2,19 +2,24 @@
 @section("content")
     <div class="container">
         <div class="row mb-3">
-            <div class="col-lg-4">
-                <h3><a href="javascript:void(0)"  data-target="#editChildDepartment" data-toggle="modal">{{ $childDepartment->tenphongban }}<i class="fas fa-edit"></i> </a> </h3>
+            <div class="col-lg-9">
+                <form class="form-inline" method="get" action="{{route("employee.index")}}">
+                    <select style="width: 40% !important;" name="departmentSelect" class="form-control">
+                        <option value="">Tất cả</option>
+                        @if ($view_data['department'])
+                            @foreach($view_data['department'] as $department)
 
-            </div>
-            <div class="col-lg-5">
-                <form class="form-inline" method="get" action="{{ route("showEmployee",['id'=>$id_child,'id_department_child'=>$id_parent]) }}">
-                    <input type="text" class="form-control" placeholder="Bạn cần tìm gì ?" style="width: 78% !important;" name="name_employees" id="search">
+                                <option value="{{ $department->id }}"> {{ $department->tenphongban }}</option>
+                            @endforeach
+                        @endif
+                    </select>
+                    <input type="text" class="form-control" placeholder="Bạn cần tìm gì ?" style="width: 48% !important;" name="name_employees" id="search">
                     <button type="submit" class="btn btn-primary">Tìm kiếm</button>
                 </form>
 
             </div>
             <div class="col-lg-3 text-right">
-                <a href="{{ route("displayFormAdd",$id_parent) }}" type="button" class="btn btn-primary">Thêm mới</a>
+                <a href="{{ route("displayFormAdd") }} " type="button" class="btn btn-primary">Thêm mới</a>
             </div>
         </div>
 
@@ -28,14 +33,14 @@
                 <th>Id</th>
                 <th>Thông tin</th>
                 <th>Ảnh</th>
-                <th>Chức vụ</th>
+                <th>Phong Ban</th>
                 <th>Ngày bắt đầu</th>
                 <th>Ngày kết thúc</th>
                 <th>Action</th>
             </tr>
             </thead>
             <tbody>
-            @foreach($employees as $employee)
+            @foreach($view_data['employees'] as $employee)
             <tr>
                 <td>
                     {{ $employee->id }}
@@ -49,22 +54,35 @@
                 <td width="200px">
                     <img width="100%" src="{{asset('/storage/'.$employee->img)  }}" alt="">
                 </td>
-                @foreach($employee->positions as $position)
-                <td>{{ $position->tenchucvu }}</td>
-                @endforeach
+
+                 @if(isset($employee->departments[0]))
+                    @foreach ($employee->departments as $department)
+                        <td> {{ $department->tenphongban }} </td>
+                    @endforeach
+                @else
+                    <td>
+                        <span>[N/A]</span>
+                    </td>
+                @endif
+
+
                 <td>{{ $employee->ngaybatdau }}</td>
                 <td>{{ $employee->ngayketthuc }}</td>
 
                 <td>
-                    <a href="{{ route("employee.show",['id'=>$employee->id,'parent_id'=>$id_parent]) }}">Sửa</a>|<a href="{{ route("employee.destroy",['id'=>$employee->id,'childDepartment_id'=>$childDepartment->id]) }}">Xóa</a></td>
-                <td></td>
+                    <a href="{{ route("employee.show",$employee->id) }}">Sửa</a>|<a href="{{ route("employee.destroy",$employee->id) }}">Xóa</a></td>
             </tr>
                 @endforeach
             </tbody>
         </table>
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                {{ $view_data['employees']->links() }}
+            </div>
+        </div>
     </div>
 
 @endsection
 @include('department.modal.add')
-@include('child_department.modal.edit',['childDepartment'=>$childDepartment])
+
 

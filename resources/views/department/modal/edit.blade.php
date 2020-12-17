@@ -1,4 +1,4 @@
-<div class="modal" id="editDepartment">
+<div class="modal" id="editDepartment_{{ $department->id }}">
     <div class="modal-dialog">
         <div class="modal-content">
             <!-- Modal Header -->
@@ -13,14 +13,20 @@
                         <strong></strong>
                     </div>
                     <label for="usr">Tên phòng ban:</label>
-                    <input type="text" id="txteditPhongBan" value="{{ $view_data['parent']["tenphongban"] }}" class="form-control" name="txtPhongBan" >
+                    <input type="text" id="txteditPhongBan" value="{{ $department->tenphongban }}" class="form-control" name="txtPhongBan" >
                     <span class="invalid-feedback1" style="color: red;font-style: italic" role="alert"></span>
                 </div>
-
+                <div class="form-group">
+                    <label>Chọn danh mục cha:</label>
+                    <select class="form-control" id="parent_id" name="parent_id">
+                        <option value="0">Chọn danh mục cha</option>
+                        {{--{!! $htmlOption !!}--}}
+                    </select>
+                </div>
             </div>
             <!-- Modal footer -->
             <div class="modal-footer">
-                <button type="button" data-url="{{route("update",['id'=>$view_data['parent']['id'],'parent_id'=>0])}}" id="btnUpdateDepartment" class="btn btn-info" >Cập nhật</button>
+                <button type="button" data-url="{{route("department.update",['id'=>$department->id]) }}" id="btnUpdateDepartment" class="btn btn-info" >Cập nhật</button>
                 <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
             </div>
 
@@ -42,7 +48,8 @@
         method: "post",
         url: url,
         data: {
-            txtPhongBan: $("#txteditPhongBan").val()
+            txtPhongBan: $("#txteditPhongBan").val(),
+            parent_id: $("#parent_id").val()
         },
         headers: {
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')

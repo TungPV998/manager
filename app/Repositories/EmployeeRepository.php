@@ -15,7 +15,7 @@ interface EmployeeRepository extends RepositoryInterface
     /**
      * @param $id
      */
-    public function listEmployees($id);
+    public function getListEmployee();
 
     /**
      * @param $employee_id

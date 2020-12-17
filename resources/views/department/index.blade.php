@@ -1,43 +1,64 @@
-@extends("layout.app");
+@extends("layout.app")
+@push("css")
+
+    @endpush
 @section("content")
     <div class="container">
         <div class="row mb-3">
             <div class="col-lg-6">
-                <h3>Quản lý phòng ban</h3>
+                <h3>Danh sách phòng ban</h3>
+                <ul class="tree">
+                        @foreach($view_data['departments'] as $department)
+                            <li>
+                              {{ $department->tenphongban }}<a id="spanEdit" href = "{{ route('department.edit',$department->id) }}  "  style="margin: 0 3%;"><i class="fas fa-edit"></i></a><a href = "{{ route('department.edit',$department->id) }}  " class="link"><i class="fas fa-trash"></i></a>
+                                {{--@include('department.modal.edit',['department'=>$department])--}}
+                                @if(count($department->childs))
+                                    @include('department.child',['childs' => $department->childs])
+                                @endif
+                            </li>
+                        @endforeach
+                </ul>
             </div>
-            <div class="col-lg-6 text-right">
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addDepartment">Thêm mới</button>
+            <div class="col-lg-6">
+                <div style="flex-direction: row;justify-content: space-between">
+                    <h3  style="flex-basis: 40%;display: inline-block;margin-right: 28%;">Thêm phòng ban </h3>
+                    <h3 style="flex-basis: 40%;display: inline-block;"><a href="{{ route("employee.index") }}">Quản Lý Nhân Viên</a> </h3>
+                </div>
+
+
+                @if (session('message'))
+                    <div class="alert alert-success text-center">{{ session('message') }}</div>
+                @endif
+
+                <form method="post" action="{{ route("department.store") }}">
+                    @csrf
+                    <div class="form-group">
+                        <label for="txt_name_cate">Tên phòng ban:</label>
+                        <p></p>
+                        <input type="text" class="form-control" name="txtPhongBan" id="txtPhongBan">
+                        @if ($errors->has('txtPhongBan'))
+                            <p class="error">
+                                <i style="color: red;font-style: italic">(*){{ $errors->first('txtPhongBan') }}</i>
+                            </p>
+                        @endif
+                    </div>
+                    <div class="form-group">
+                        <label>Chọn danh mục cha:</label>
+                        <select class="form-control" name="parent_id">
+                            <option value="0">Chọn danh mục cha</option>
+                            {!! $view_data['htmlOption'] !!}
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-info">Thêm mới</button>
+                </form>
+
             </div>
         </div>
-        @if (session('message'))
-            <div class="alert alert-success text-center">{{ session('message') }}</div>
-        @endif
-        <table class="table table-striped my-5">
-            <thead>
-            <tr>
-                <th>Id</th>
-                <th>Tên phòng ban</th>
-                <th>Action</th>
-            </tr>
-            </thead>
-            <tbody>
-            @if($departments)
-            @foreach($departments as $department)
-            <tr>
-                <td>{{ $department->id }}</td>
-                <td>{{ $department->tenphongban }}</td>
-                <td>
-                    <a href="{{ route("detailDepartment",$department->id) }}">Chi Tiết</a>|<a style="cursor: pointer" data-toggle="modal" data-target="#deleteDepartment_{{$department->id}}">Xóa</a>
-                    @include('department.modal.delete',['department'=>$department])
-                </td>
-                <td></td>
-            </tr>
-                @endforeach
-                @endif
-            </tbody>
-        </table>
+
     </div>
 
 @endsection
-@include('department.modal.add')
 
+@push("script")
+
+@endpush

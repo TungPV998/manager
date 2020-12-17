@@ -2,7 +2,8 @@
 @section("content")
     <div class="container">
      <div class="row">
-         <div class="col-lg-12"><h1> Thêm Nhân Viên</h1></div>
+         <div class="col-lg-6"><h1> Thêm Nhân Viên</h1></div>
+         <div class="col-lg-6 text-right"><a class="text-right" style="font-size: 25px" href="{{ route("employee.index") }}">Danh sách nhân Viên</a></div>
          <div class="col-lg-12">
              @if (session('error'))
                  <div class="alert alert-danger text-center">{{ session('error') }}</div>
@@ -51,25 +52,6 @@
                              <input type="radio" value="1" class="form-check-input" name="gioitinh">Nữ
                          </label>
                      </div>
-                 </div>
-                 <div class="form-group">
-
-                     <div class="form-group">
-                         <label for="email">Chức Vụ</label>
-                         <select class="form-control" name="macv" id="sel1">
-                             @foreach($positions as $position)
-                             <option value="{{ $position->id }}">{{ $position->tenchucvu }}</option>
-                            @endforeach
-                         </select>
-                     </div>
-                 </div>
-                 <div class="form-group">
-                     <label for="pwd">Phòng Ban</label>
-                     <select class="form-control" name="department" id="sel1">
-                         @foreach($departments as $department)
-                             <option value="{{ $department->id }}">{{ $department->tenphongban }}</option>
-                         @endforeach
-                     </select>
                  </div>
                  <div class="form-group">
                      <label for="pwd">Ngày bắt đầu</label>
