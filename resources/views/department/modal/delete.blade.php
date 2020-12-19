@@ -1,7 +1,10 @@
-<form method="post" action="{{route("destroy",$department->id)}}">
-    <div class="modal fade" id="deleteDepartment_{{$department->id}}" tabindex="-1" role="dialog" aria-hidden="true">
+<form style="" method="get" action="{{ route('department.destroy',$department->id) }}">
+    <div style="" class="modal fade" id="deleteDepartment_{{$department->id}}" tabindex="-1" role="dialog" aria-hidden="true">
         @csrf
-        @method("delete")
+        {{--"width: 100%;z-index: 9999999;display: block;--}}
+        {{--margin-left: 0%;--}}
+        {{--background: transparent;"--}}
+        {{--@method("delete")--}}
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">

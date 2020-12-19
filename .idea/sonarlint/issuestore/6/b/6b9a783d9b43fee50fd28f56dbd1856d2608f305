@@ -1,6 +1,4 @@
 
-c	php:S1192"GDefine a constant instead of duplicating this literal "update" 3 times.(™ğâ«8“ñÒ£ä.
-g	php:S1192"FDefine a constant instead of duplicating this literal "index" 6 times.(”Í“·øÿÿÿÿ8Ã¢œ½â.
-i	php:S1192"HDefine a constant instead of duplicating this literal "destroy" 4 times.(â©ÑÔıÿÿÿÿ8ŸãÓä.
-b	php:S1192"FDefine a constant instead of duplicating this literal "store" 4 times.(ßêÊª8ı™Ãã.
-:php:S125%"Remove this commented out code.(‚ñÇ‘8Àâé„å.
+:php:S125$"Remove this commented out code.(‚ñÇ‘8âÙ²ÿæ.
+b	php:S1192"FDefine a constant instead of duplicating this literal "store" 3 times.(ßêÊª8ı™Ãã.
+g	php:S1192"FDefine a constant instead of duplicating this literal "index" 4 times.(ê‹’ıÿÿÿÿ8¢Œşîæ.

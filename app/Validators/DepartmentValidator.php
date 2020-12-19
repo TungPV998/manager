@@ -19,10 +19,10 @@ class DepartmentValidator extends LaravelValidator
      */
     protected $rules = [
         ValidatorInterface::RULE_CREATE => [
-            'txtPhongBan' => 'required|string|max:255|unique:departments,tenphongban'
+            'txtPhongBan' => 'string|max:255|unique:departments,tenphongban'
         ],
         ValidatorInterface::RULE_UPDATE => [
-            'txtPhongBan' => 'required|string|max:255|unique:departments,tenphongban'
+            'txtPhongBan' => 'string|max:255|unique:departments,tenphongban'
         ],
     ];
     protected $messages = [

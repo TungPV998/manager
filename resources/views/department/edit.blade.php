@@ -5,11 +5,14 @@
 @section("content")
     <div class="container">
         <div class="row">
+            <div class="col-lg-12 text-right">
+                <a href="{{ route("department.index") }}">Quay lại trang chủ</a>
+            </div>
             <div class="col-lg-12">
                 @if (session('message'))
                     <div class="alert alert-success text-center">{{ session('message') }}</div>
                 @endif
-                <form method="post" action="{{ route("department.update",['id'=>$department->id,'parent_id'=>$department->parent_id]) }}">
+                <form method="post" action="{{ route("department.update",['id'=>$department->id]) }}">
                     @csrf
                     <div class="form-group">
                         <label for="txt_name_cate">Tên phòng ban:</label>
@@ -34,9 +37,6 @@
 
 
     </div>
-
+    </div>
 @endsection
 
-@push("script")
-
-@endpush

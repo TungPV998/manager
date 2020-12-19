@@ -7,6 +7,7 @@ use App\Criteria\DepartmentRequestCriteria;
 use App\Criteria\EmployeeCriteria;
 use App\Criteria\EmployeeRequestCriteria;
 use App\Repositories\EmployeeRepository;
+use App\Repositories\PositionRepository;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -33,7 +34,7 @@ class DepartmentsController extends Controller
      * @var DepartmentValidator
      */
     protected $validator;
-
+    protected $position;
     protected $employee;
     /**
      * DepartmentsController constructor.
@@ -43,9 +44,11 @@ class DepartmentsController extends Controller
      */
     public function __construct(DepartmentRepository $repository,
                                 DepartmentValidator $validator,
-                                EmployeeRepository $employee
+                                EmployeeRepository $employee,
+                                PositionRepository $position
     )
     {
+        $this->position = $position;
         $this->employee = $employee;
         $this->repository = $repository;
         $this->validator  = $validator;
@@ -204,7 +207,6 @@ class DepartmentsController extends Controller
     public function edit($id)
     {
         $department = $this->repository->find($id);
-       // dd($department->parent_id);
         $htmlOption = $this->repository->recursiveDepartment($department->parent_id);
         return view('department.edit', compact('department','htmlOption'));
     }
@@ -219,32 +221,26 @@ class DepartmentsController extends Controller
      *
      * @throws \Prettus\Validator\Exceptions\ValidatorException
      */
-    public function update(Request $request, $id,$parent_id)
+    public function update(Request $request, $id)
     {
         try {
             $this->validator->setId($id)->with($request->only('txtPhongBan'))->passesOrFail(DepartmentValidator::RULE_UPDATE);
             $tenphongban = $request->post('txtPhongBan');
+            $parent_id = $request->post('parent_id');
             $department = $this->repository->update(['tenphongban'=>$tenphongban,'parent_id'=>$parent_id],$id);
-            $response = $department ? [
-                'message' => "Cập nhật thành công",
-                'status' => 200,
-            ] : [
-                'message' => "Cập nhật thất bại",
-                'status' => 500,
-            ];
+            if ($department) {
+                return back()->with('message', "Cập nhật thành công");
+            }
+            throw new \Exception('Xảy ra lỗi khi cập nhật phong ban');
+
         } catch (ValidatorException $e) {
-            $response = [
-                'status' => 422,
-                'message' => $e->getMessageBag()
-            ];
+            return back()->withInput($request->all())->withErrors($e->getMessageBag());
         }
-        catch(Exception $exception) {
-            $response = [
-                'message' => "Cập nhật thất bại",
-                'status' => 500,
-            ];
+        catch (\Exception $exception) {
+            report($exception);
+            return back()->with('message',"Cập nhật that bai" );
+
         }
-        return response()->json($response);
 
     }
 
@@ -260,28 +256,60 @@ class DepartmentsController extends Controller
     {
         try{
           \DB::beginTransaction();
-
-            $department = $this->repository->find($id);
-            if($department->parent_id === 0){
-                $listChildDepartment = $this->repository->findDepartment($department->id);
-                foreach ($listChildDepartment as $child){
-                    $this->repository->destroyDepartment($child->id);
-                }
-                $this->repository->deleteWhere(['parent_id'=>$id]);
-            }else{
-                $this->repository->destroyDepartment($id);
+            $department = $this->repository->delete($id);
+            if($department){
+                \DB::commit();
+                return redirect()->back()->with('messageDelete', 'Xóa thành công');
             }
-            $department->delete();
-           \DB::commit();
-            return redirect()->back()->with('message', 'Xóa thành công');
+            return redirect()->back()->with('messageDelete', 'Xóa thất bại');
         }catch (\Exception $exception){
             \DB::rollback();
             report($exception);
             return back()->withError($exception->getMessage());
 
         }
+    }
+    public  function getListEmployee($department_id){
+      // dd("okok");
+       $employee = $this->employee->paginate();
+       $position = $this->position->all();
 
-
+        $view_data =  [
+            'employees' => $employee,
+            'position' => $position,
+        ];
+        $data = view("department.modal.addEmployee", compact("view_data"))->render();
+        return \response([
+            "data" => $data,
+            'status' => 200
+        ]);
 
     }
+
+    public function toggleProductMappingGroup($group_id, Request $request)
+    {
+        $product_id = $request->post('product_id');
+        /**
+         * @var Group $group
+         */
+        $group = $this->group->find($group_id);
+        /**
+         * @var Product $product
+         */
+        $product = $this->product->find($product_id);
+        if ($product->groups()->where('groups.id', $group_id)->count()) {
+            $product->groups()->detach($group->id);
+            return \response([
+                'status' => 200,
+                'message' => 'Loại bỏ sản phẩm khỏi danh mục thành công.'
+            ]);
+        } else {
+            $product->groups()->save($group);
+            return \response([
+                'status' => 200,
+                'message' => 'Thêm sản phẩm vào danh mục thành công.'
+            ]);
+        }
+    }
+
 }

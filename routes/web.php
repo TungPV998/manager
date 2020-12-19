@@ -32,12 +32,12 @@ Route::prefix('employees')->group(function () {
 });
 
 Route::prefix('department')->group(function () {
-    Route::get('index', [\App\Http\Controllers\DepartmentsController::class, 'index'])->name('index');
-    Route::get('show/detail/employee/{id}/{id_department_child}', [\App\Http\Controllers\DepartmentsController::class, 'showEmployee'])->name('showEmployee');
-    Route::get('detail/{id}', [\App\Http\Controllers\DepartmentsController::class, 'showChildDepartment'])->name('detailDepartment');
-    Route::delete('delete/{id}', [\App\Http\Controllers\DepartmentsController::class, 'destroy'])->name('deleteDepartment');
+    Route::get('index', [\App\Http\Controllers\DepartmentsController::class, 'index'])->name('department.index');
+   // Route::get('show/detail/employee/{id}/{id_department_child}', [\App\Http\Controllers\DepartmentsController::class, 'showEmployee'])->name('showEmployee');
+   // Route::get('detail/{id}', [\App\Http\Controllers\DepartmentsController::class, 'showChildDepartment'])->name('detailDepartment');
+    Route::get('get-list-employee/{department_id}', [\App\Http\Controllers\DepartmentsController::class, 'getListEmployee'])->name('getListEmployee');
     Route::post('store', [\App\Http\Controllers\DepartmentsController::class, 'store'])->name('department.store');
-    Route::post('update/{id}/{parent_id}', [\App\Http\Controllers\DepartmentsController::class, 'update'])->name('department.update');
-    Route::delete('destroy-department/{id}/', [\App\Http\Controllers\DepartmentsController::class, 'destroy'])->name('destroy');
+    Route::post('update/{id}', [\App\Http\Controllers\DepartmentsController::class, 'update'])->name('department.update');
+    Route::get('destroy-department/{id}/', [\App\Http\Controllers\DepartmentsController::class, 'destroy'])->name('department.destroy');
     Route::get('edit/{id}', [\App\Http\Controllers\DepartmentsController::class, 'edit'])->name('department.edit');
 });

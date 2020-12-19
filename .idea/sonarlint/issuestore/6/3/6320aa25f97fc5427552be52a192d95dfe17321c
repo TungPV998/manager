@@ -1,11 +1,17 @@
 
-W	php:S1481Š"5Remove this unused "$childDepartment" local variable.(ááî²şÿÿÿÿ8óíä†å.
-j	php:S1192Z"IDefine a constant instead of duplicating this literal "message" 13 times.(Ÿûÿÿÿÿ8Ú¤ºã.
-h	php:S1192X"LDefine a constant instead of duplicating this literal "tenphongban" 3 times.(ºìæµ8İÙïáã.
-z	php:S1192]"YDefine a constant instead of duplicating this literal "Táº¡o má»›i tháº¥t báº¡i" 4 times.(‚š¥Çÿÿÿÿÿ8İÙïáã.
-;php:S125›"Remove this commented out code.(¨¦ğ8•ÕÑ‰å.
-k	php:S1192<"JDefine a constant instead of duplicating this literal "parent_id" 6 times.(æÒ„ƒüÿÿÿÿ8ŸœÜä.
-i	php:S1192["HDefine a constant instead of duplicating this literal "status" 12 times.(Ş¥¶ãÿÿÿÿÿ8ôä¤ºã.
-h	php:S1192V"LDefine a constant instead of duplicating this literal "txtPhongBan" 6 times.(¬Ê¨¤8Õ”’áã.
-@php:S125¿"Remove this commented out code.(–ÀîÌüÿÿÿÿ8óíä†å.
-@php:S125­"Remove this commented out code.(—˜“—üÿÿÿÿ8´ä‡Šå.
+;php:S125¤"Remove this commented out code.(Ú°à¬8­ëİûæ.
+;php:S125—"Remove this commented out code.(º·Şº8‘Üûæ.
+;php:S125Œ"Remove this commented out code.(º·Şº8‘Üûæ.
+aphp:S112l"FDefine and throw a dedicated exception instead of using a generic one.(ƒ´ãÓ8¥Œşîæ.
+d	php:S1192j"HDefine a constant instead of duplicating this literal "message" 4 times.(èĞÇ—8¥Œşîæ.
+m	php:S1192>"LDefine a constant instead of duplicating this literal "tenphongban" 3 times.(ó©ëäûÿÿÿÿ8¥Œşîæ.
+;php:S125"Remove this commented out code.(Ú°à¬8‘Üûæ.
+k	php:S1192="JDefine a constant instead of duplicating this literal "parent_id" 5 times.(Ÿ¥©Áøÿÿÿÿ8ÇÎ¬öæ.
+;php:S125¬"Remove this commented out code.(ûšÂé8­ëİûæ.
+K	php:S1481?"/Remove this unused "$parent_id" local variable.(Ù°  8¥Œşîæ.
+bphp:S112ç"FDefine and throw a dedicated exception instead of using a generic one.(äæ¼·8¼ÿÇşæ.
+h	php:S1192f"LDefine a constant instead of duplicating this literal "txtPhongBan" 4 times.(¬Ê¨¤8Õ”’áã.
+@php:S125·"Remove this commented out code.(èÉÕüÿÿÿÿÿ8­ëİûæ.
+;php:S125‘"Remove this commented out code.(º·Şº8‘Üûæ.
+@php:S125²"Remove this commented out code.(Ìˆ‘Šüÿÿÿÿ8­ëİûæ.
+@php:S125®"Remove this commented out code.(®ŞÌÏıÿÿÿÿ8­ëİûæ.
