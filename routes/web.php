@@ -33,7 +33,7 @@ Route::prefix('employees')->group(function () {
 
 Route::prefix('department')->group(function () {
     Route::get('index', [\App\Http\Controllers\DepartmentsController::class, 'index'])->name('department.index');
-   // Route::get('show/detail/employee/{id}/{id_department_child}', [\App\Http\Controllers\DepartmentsController::class, 'showEmployee'])->name('showEmployee');
+    Route::post('toggle-employee/{id}', [\App\Http\Controllers\DepartmentsController::class, 'toggleEmployeeMappingDepartment'])->name('toggleEmployeeMappingDepartment');
    // Route::get('detail/{id}', [\App\Http\Controllers\DepartmentsController::class, 'showChildDepartment'])->name('detailDepartment');
     Route::get('get-list-employee/{department_id}', [\App\Http\Controllers\DepartmentsController::class, 'getListEmployee'])->name('getListEmployee');
     Route::post('store', [\App\Http\Controllers\DepartmentsController::class, 'store'])->name('department.store');

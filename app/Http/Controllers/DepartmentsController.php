@@ -255,27 +255,40 @@ class DepartmentsController extends Controller
     public function destroy($id)
     {
         try{
-          \DB::beginTransaction();
-            $department = $this->repository->delete($id);
-            if($department){
-                \DB::commit();
-                return redirect()->back()->with('messageDelete', 'Xóa thành công');
+            \DB::beginTransaction();
+
+            $department = $this->repository->find($id);
+            if($department->parent_id === 0){
+                $listChildDepartment = $this->repository->findDepartment($department->id);
+                foreach ($listChildDepartment as $child){
+                    $this->repository->destroyDepartment($child->id);
+                }
+                $this->repository->deleteWhere(['parent_id'=>$id]);
+            }else{
+                $this->repository->destroyDepartment($id);
             }
-            return redirect()->back()->with('messageDelete', 'Xóa thất bại');
+            $department->delete();
+            \DB::commit();
+            return redirect()->back()->with('message', 'Xóa thành công');
         }catch (\Exception $exception){
             \DB::rollback();
             report($exception);
             return back()->withError($exception->getMessage());
 
         }
+
     }
     public  function getListEmployee($department_id){
-      // dd("okok");
-       $employee = $this->employee->paginate();
+
+       $employees = $this->employee->with('departments')->paginate();
        $position = $this->position->all();
 
+        foreach ($employees as $employee) {
+            $employee->checked = $employee->departments()->where('departments.id', $department_id)->count() ? true : false;
+        }
         $view_data =  [
-            'employees' => $employee,
+            'department_id'=>$department_id,
+            'employees' => $employees,
             'position' => $position,
         ];
         $data = view("department.modal.addEmployee", compact("view_data"))->render();
@@ -286,28 +299,23 @@ class DepartmentsController extends Controller
 
     }
 
-    public function toggleProductMappingGroup($group_id, Request $request)
+    public function toggleEmployeeMappingDepartment($department_id, Request $request)
     {
-        $product_id = $request->post('product_id');
-        /**
-         * @var Group $group
-         */
-        $group = $this->group->find($group_id);
-        /**
-         * @var Product $product
-         */
-        $product = $this->product->find($product_id);
-        if ($product->groups()->where('groups.id', $group_id)->count()) {
-            $product->groups()->detach($group->id);
+        $employee_id= $request->post('employee_id');
+        $position_id= $request->post('position');
+        $department = $this->repository->find($department_id);
+        $employee = $this->employee->find($employee_id);
+        if ($employee->departments()->where('departments.id', $department_id)->count()) {
+            $employee->departments()->detach($department->id,['position_id'=>$position_id]);
             return \response([
                 'status' => 200,
-                'message' => 'Loại bỏ sản phẩm khỏi danh mục thành công.'
+                'message' => 'Loại bỏ nhan vien khoi phong ban thành công.'
             ]);
         } else {
-            $product->groups()->save($group);
+            $employee->departments()->attach($department->id,['position_id'=>$position_id]);
             return \response([
                 'status' => 200,
-                'message' => 'Thêm sản phẩm vào danh mục thành công.'
+                'message' => 'Thêm nhan vien vao phong ban thành công.'
             ]);
         }
     }

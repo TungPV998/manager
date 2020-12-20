@@ -1,52 +1,51 @@
-{{--<ul>--}}
-    {{--@foreach($childs as $child)--}}
-        {{--<li>--}}
-             {{--<span class="titleDepartment">--}}
-            {{--{{ $child->tenphongban }}--}}
-             {{--</span>--}}
-            {{--<a href = "{{ route('department.edit',$child->id) }}  "  style="margin: 0 3%;"><i class="fas fa-edit"></i></a><a data-toggle="modal" data-target="#deleteDepartment_{{$child->id}}"><i class="fas fa-trash"></i></a>--}}
-            {{--<span class="getListEmployee" data-url = "{{ route("getListEmployee") }}" style="margin: 0 3%;"><i class="fas fa-plus"></i></span>--}}
-            {{--@include('department.modal.delete',['department'=>$child])--}}
-            {{--@if(count($child->childs))--}}
-                {{--@include('department.child',['childs' => $child->childs])--}}
-            {{--@endif--}}
-        {{--</li>--}}
-    {{--@endforeach--}}
-{{--</ul>--}}
-
-<ul class="children nav-child unstyled small collapse" id="sub-item_{{$department->id}}">
-    @foreach($childs as $child)
-    <li class="item-2 deeper parent active my-2" style="margin-bottom: 5%">
-            <a class="d-block link" href="#">
-                <span data-toggle="collapse" data-parent="#menu-group_{{$child->id}}" href="#sub-item_{{$child->id}}" class="sign"><i class="icon-plus icon-white"></i></span>
-                <span class="lbl"> {{ $child->tenphongban }}</span>
-            </a>
-        <div style="text-align: right;display: inline-block;width: 44%;">
-                    <a href = "{{ route('department.edit',$child->id) }}"  style="margin: 0 3%;">
-                        <i class="fas fa-edit"></i></a>
-                    <a data-toggle="modal" data-target="#deleteDepartment_{{$child->id}}">
-                        <i class="fas fa-trash"></i>
-                    </a>
-                    <span class="getListEmployee" data-toggle="modal" data-target="#addEmployee" data-url = "{{ route("getListEmployee",$child->id) }}" style="margin: 0 3%;"><i class="fas fa-plus"></i></span>
+<div id="collapse_{{$department->id}}" class="collapse show" data-parent="#accordion_{{$department->id}}" aria-labelledby="heading-1">
+    <div class="card-body">
+        @foreach($childs as $child)
+        <div id="accordion-1_{{$child->id}}">
+            <div class="card">
+                <div class="card-header" id="heading-1-1">
+                    <h5 class="mb-0"  style="display: inline-block;width: 80%;">
+                        <a class="collapsed" role="button" data-toggle="collapse" href="#collapse_child_{{ $child->id }}" aria-expanded="false" aria-controls="collapse-1-1">
+                            {{ $child->tenphongban }}
+                        </a>
+                    </h5>
+                    <div style="display: inline-block;width: 24%;position: relative;right: -89%;bottom: 23px">
+                        <a href = "{{ route('department.edit',$department->id) }}"  style="margin: 0 3%;">
+                            <i class="fas fa-edit"></i></a>
+                        <a data-toggle="modal" data-target="#deleteDepartment_{{$department->id}}">
+                            <i class="fas fa-trash"></i>
+                        </a>
+                        <span data-toggle="modal" data-target="#addEmployee" class="getListEmployee" data-url = "{{ route("getListEmployee",$child->id) }}" style="margin: 0 3%;"><i class="fas fa-plus"></i></span>
+                    </div>
+                </div>
+                <div id="collapse_child_{{ $child->id }}" class="collapse" data-parent="#accordion-1_{{$child->id}}" aria-labelledby="heading-1-1">
+                    <div class="card-body">
+                        <div id="accordion-1-1">
+                            <div class="card">
+                                <div class="card-header" id="heading-1-1-1">
+                                    <h5 class="mb-0">
+                                        <a class="collapsed" role="button" data-toggle="collapse" href="#collapse-1-1-1" aria-expanded="false" aria-controls="collapse-1-1-1">
+                                            Item 1 > 1 > 1
+                                        </a>
+                                    </h5>
+                                </div>
+                                <div id="collapse-1-1-1" class="collapse" data-parent="#accordion-1-1" aria-labelledby="heading-1-1-1">
+                                    <div class="card-body">
+                                        Text 1 > 1 > 1
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+                @include('department.modal.delete',['department'=>$child])
         </div>
-        <ul class="children nav-child unstyled small collapse" id="sub-item_{{$child->id}}">
-            <li class="item-3">
-                <a class="link" href="#">
-                    <span class="sign"><i class="icon-play"></i></span>
-                    <span class="lbl">Menu 1.1</span> (current menu)
-                </a>
-            </li>
-            <li class="item-4">
-                <a class="link" href="#">
-                    <span class="sign"><i class="icon-play"></i></span>
-                    <span class="lbl">Menu 1.2</span>
-                </a>
-            </li>
-        </ul>
-    </li>
-        @include('department.modal.delete',['department'=>$child])
-    @endforeach
-</ul>
+            @endforeach
+
+
+    </div>
+</div>
 @include('department.modal.list')
 @push('scripts')
 <script>

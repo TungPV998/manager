@@ -11,98 +11,40 @@
                 @if (session('messageDelete'))
                     <div class="alert alert-success text-center">{{ session('messageDelete') }}</div>
                 @endif
-
-                <ul id="menu-group-1" class="nav menu jumbotron">
+                @if ($view_data['departments'])
                     @foreach($view_data['departments'] as $department)
-                    <li class="item-1 deeper parent active">
-                        <a class="link" data-toggle="collapse" data-parent="#menu-group_{{$department->id}}" href="#sub-item_{{$department->id}}">
-                            <span  class="sign"><i class="icon-plus icon-white"></i></span>
-                            <span class="lbl">{{ $department->tenphongban }}</span>
-                        </a>
-                        <div style="display: inline-block;width: 65%;position: relative;right: -80%;bottom: 23px;z-index: 99999;">
-                            <a href = "{{ route('department.edit',$department->id) }}"  style="margin: 0 3%;">
-                                <i class="fas fa-edit"></i></a>
-                            <a data-toggle="modal" data-target="#deleteDepartment_{{$department->id}}">
-                                <i class="fas fa-trash"></i>
-                            </a>
-
+                        <div id="accordion_{{$department->id}}">
+                        <div class="card">
+                            <div class="card-header" id="heading-1">
+                                <h5 class="mb-0" style="display: inline-block;width: 80%;">
+                                    <a role="button" data-toggle="collapse" href="#collapse_{{$department->id}}" aria-expanded="true" aria-controls="collapse_{{$department->id}}">
+                                        {{$department->tenphongban}}
+                                    </a>
+                                </h5>
+                                <div style="display: inline-block;width: 24%;position: relative;right: -89%;bottom: 23px;">
+                                    <a href = "{{ route('department.edit',$department->id) }}"  style="margin: 0 3%;">
+                                        <i class="fas fa-edit"></i></a>
+                                    <a data-toggle="modal" data-target="#deleteDepartment_{{$department->id}}">
+                                        <i class="fas fa-trash"></i>
+                                    </a>
+                                    @include('department.modal.delete',['department'=>$department])
+                                </div>
+                                @if(count($department->childs))
+                                    @include('department.child',['childs' => $department->childs,'department'=>$department])
+                                @endif
+                            </div>
                         </div>
-                        @if(count($department->childs))
-                            @include('department.child',['childs' => $department->childs,'department'=>$department])
-                        @endif
-                    </li>
-                        @include('department.modal.delete',['department'=>$department])
+                        </div>
                     @endforeach
-                    {{--<li class="item-8 deeper parent">--}}
-                        {{--<a class="link" href="#">--}}
-                            {{--<span data-toggle="collapse" data-parent="#menu-group-1" href="#sub-item-8" class="sign"><i class="icon-plus icon-white"></i></span>--}}
-                            {{--<span class="lbl">Menu Group ii</span>--}}
-                        {{--</a>--}}
-                        {{--<ul class="children nav-child unstyled small collapse" id="sub-item-8">--}}
-                            {{--<li class="item-9 deeper parent">--}}
-                                {{--<a class="link" href="#">--}}
-                                    {{--<span data-toggle="collapse" data-parent="#menu-group-1" href="#sub-item-9" class="sign"><i class="icon-plus icon-white"></i></span>--}}
-                                    {{--<span class="lbl">Menu 1</span>--}}
-                                {{--</a>--}}
-                                {{--<ul class="children nav-child unstyled small collapse" id="sub-item-9">--}}
-                                    {{--<li class="item-10">--}}
-                                        {{--<a class="link" href="#">--}}
-                                            {{--<span class="sign"><i class="icon-play"></i></span>--}}
-                                            {{--<span class="lbl">Menu 1.1</span>--}}
-                                        {{--</a>--}}
-                                    {{--</li>--}}
-                                    {{--<li class="item-11">--}}
-                                        {{--<a class="link" href="#">--}}
-                                            {{--<span class="sign"><i class="icon-play"></i></span>--}}
-                                            {{--<span class="lbl">Menu 1.2</span>--}}
-                                        {{--</a>--}}
-                                    {{--</li>--}}
-                                {{--</ul>--}}
-                            {{--</li>--}}
-                            {{--<li class="item-12 deeper parent">--}}
-                                {{--<a class="link" href="#">--}}
-                                    {{--<span data-toggle="collapse" data-parent="#menu-group-1" href="#sub-item-12" class="sign"><i class="icon-plus icon-white"></i></span>--}}
-                                    {{--<span class="lbl">Menu 2</span>--}}
-                                {{--</a>--}}
-                                {{--<ul class="children nav-child unstyled small collapse" id="sub-item-12">--}}
-                                    {{--<li class="item-13">--}}
-                                        {{--<a class="link" href="#">--}}
-                                            {{--<span class="sign"><i class="icon-play"></i></span>--}}
-                                            {{--<span class="lbl">Menu 2.1</span>--}}
-                                        {{--</a>--}}
-                                    {{--</li>--}}
-                                    {{--<li class="item-14">--}}
-                                        {{--<a class="link" href="#">--}}
-                                            {{--<span class="sign"><i class="icon-play"></i></span>--}}
-                                            {{--<span class="lbl">Menu 2.2</span>--}}
-                                        {{--</a>--}}
-                                    {{--</li>--}}
-                                {{--</ul>--}}
-                            {{--</li>--}}
-                        {{--</ul>--}}
-                    {{--</li>--}}
-                </ul>
+                        @endif
 
-                {{--<ul class="tree1">--}}
-                        {{--@foreach($view_data['departments'] as $department)--}}
-                            {{--<li >--}}
-                                {{--{{ $department->tenphongban }}--}}
-                              {{--<a id="spanEdit" href = "{{ route('department.edit',$department->id) }}  "  style="margin: 0 3%;"><i class="fas fa-edit"></i></a><a  data-toggle="modal" data-target="#deleteDepartment_{{$department->id}}"><i class="fas fa-trash"></i></a>--}}
-                                {{--@include('department.modal.edit',['department'=>$department])--}}{{-- @include('department.modal.delete',['department'=>$department])--}}
-                                {{--@if(count($department->childs))--}}
-                                    {{--@include('department.child',['childs' => $department->childs])--}}
-                                {{--@endif--}}
-                            {{--</li>--}}
-                        {{--@endforeach--}}
-                {{--</ul>--}}
+
             </div>
             <div class="col-lg-6">
                 <div style="flex-direction: row;justify-content: space-between">
                     <h3  style="flex-basis: 40%;display: inline-block;margin-right: 28%;">Thêm phòng ban </h3>
                     <h3 style="flex-basis: 40%;display: inline-block;"><a href="{{ route("employee.index") }}">Quản Lý Nhân Viên</a> </h3>
                 </div>
-
-
                 @if (session('message'))
                     <div class="alert alert-success text-center">{{ session('message') }}</div>
                 @endif
@@ -138,12 +80,6 @@
 
 @push("script")
     <script>
-        // $(document).ready(function(){
-        //     $("span.getListEmployee").click(function (e) {
-        //         console.log("okok");
-        //     });
-        //
-        // });
     </script>
 
 @endpush
