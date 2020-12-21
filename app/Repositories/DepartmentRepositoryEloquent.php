@@ -67,11 +67,6 @@ class DepartmentRepositoryEloquent extends BaseRepository implements DepartmentR
         return \DB::table('employeedepartment')->where("department_id",$department_id)->delete();
     }
 
-    /*
-     * De quy menu
-     *
-     *
-     */
     public function recursiveDepartment($parentId, $id=0, $text=''){
         foreach ($this->makeModel()->all() as $department) {
             if ($department["parent_id"] === $id) {

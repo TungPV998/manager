@@ -18,32 +18,23 @@
                         <span data-toggle="modal" data-target="#addEmployee" class="getListEmployee" data-url = "{{ route("getListEmployee",$child->id) }}" style="margin: 0 3%;"><i class="fas fa-plus"></i></span>
                     </div>
                 </div>
-                <div id="collapse_child_{{ $child->id }}" class="collapse" data-parent="#accordion-1_{{$child->id}}" aria-labelledby="heading-1-1">
-                    <div class="card-body">
-                        <div id="accordion-1-1">
-                            <div class="card">
-                                <div class="card-header" id="heading-1-1-1">
-                                    <h5 class="mb-0">
-                                        <a class="collapsed" role="button" data-toggle="collapse" href="#collapse-1-1-1" aria-expanded="false" aria-controls="collapse-1-1-1">
-                                            Item 1 > 1 > 1
-                                        </a>
-                                    </h5>
-                                </div>
-                                <div id="collapse-1-1-1" class="collapse" data-parent="#accordion-1-1" aria-labelledby="heading-1-1-1">
-                                    <div class="card-body">
-                                        Text 1 > 1 > 1
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                {{--<div id="collapse_child_{{ $child->id }}" class="collapse" data-parent="#accordion-1_{{$child->id}}" aria-labelledby="heading-1-1">--}}
+                    {{--<div class="card-body">--}}
+                        {{--<div id="accordion-1_{{$child->id}}">--}}
+                            {{--<div class="card">--}}
+                                {{--<div id="collapse-1-1-1" class="collapse" data-parent="#accordion-1_{{$child->id}}" aria-labelledby="heading-1-1-1">--}}
+                                    {{--<div class="card-body">--}}
+                                        {{--Text 1 > 1 > 1--}}
+                                    {{--</div>--}}
+                                {{--</div>--}}
+                            {{--</div>--}}
+                        {{--</div>--}}
+                    {{--</div>--}}
+                {{--</div>--}}
             </div>
                 @include('department.modal.delete',['department'=>$child])
         </div>
             @endforeach
-
-
     </div>
 </div>
 @include('department.modal.list')

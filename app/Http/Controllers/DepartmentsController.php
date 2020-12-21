@@ -256,7 +256,6 @@ class DepartmentsController extends Controller
     {
         try{
             \DB::beginTransaction();
-
             $department = $this->repository->find($id);
             if($department->parent_id === 0){
                 $listChildDepartment = $this->repository->findDepartment($department->id);
