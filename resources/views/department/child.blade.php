@@ -10,9 +10,9 @@
                         </a>
                     </h5>
                     <div style="display: inline-block;width: 24%;position: relative;right: -89%;bottom: 23px">
-                        <a href = "{{ route('department.edit',$department->id) }}"  style="margin: 0 3%;">
+                        <a href = "{{ route('department.edit',$child->id) }}"  style="margin: 0 3%;">
                             <i class="fas fa-edit"></i></a>
-                        <a data-toggle="modal" data-target="#deleteDepartment_{{$department->id}}">
+                        <a data-toggle="modal" data-target="#deleteDepartment_{{$child->id}}">
                             <i class="fas fa-trash"></i>
                         </a>
                         <span data-toggle="modal" data-target="#addEmployee" class="getListEmployee" data-url = "{{ route("getListEmployee",$child->id) }}" style="margin: 0 3%;"><i class="fas fa-plus"></i></span>
