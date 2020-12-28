@@ -149,3 +149,11 @@ Y
 )resources/views/department/edit.blade.php,6\c\6cb767ebd2a3b29e5a5334af76043f04c64cbfc3
 Z
 *resources/views/department/child.blade.php,e\2\e22e47a6afd0299aa3052e56f4780dc5a74b21cf
+k
+;resources/views/department/modal/deleteDepartment.blade.php,7\d\7d9f70814e3dc28aa3d59b5dda0a93bfe55227eb
+N
+app/Model/Employeeposition.php,7\9\79466cbd8185be41659dc346701a5ea26fe384fa
+]
+-resources/views/department/addRowLi.blade.php,f\c\fcc1aa9efd90c024cb3e11156fdc1ef7f8d9c72d
+f
+6resources/views/department/modal/addEmployee.blade.php,e\c\ecedc35a48eae916874b3d3e61c5fff5f087b286

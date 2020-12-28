@@ -31,8 +31,8 @@
             <td>
                 <div class="form-group">
                     <select class="form-control" name="position" id="position">
-                        @foreach($view_data['position'] as $position)
-                        <option value="{{ $position->id }}">{{ $position->tenchucvu }}</option>
+                        @foreach($view_data['positions'] as $position)
+                        <option {{ $position->id == $employee->positionId ? "selected" : "" }}  value="{{ $position->id }}">{{ $position->tenchucvu }}</option>
                          @endforeach
                     </select>
                 </div>
@@ -94,7 +94,7 @@
     function toggle_employee_mapping_department(employee_id) {
         $.ajax({
             url: '{{route('toggleEmployeeMappingDepartment',$view_data['department_id'])}}',
-            method: "POST",
+            method: "get",
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
@@ -106,7 +106,9 @@
         })
             .done(function (msg) {
                 if (msg.status == 200) {
+                    console.log(msg);
                     alert(msg.message);
+                    $(".addEmployee_"+msg.id).append(msg.data);
                 } else {
                     alert(msg.message);
                 }

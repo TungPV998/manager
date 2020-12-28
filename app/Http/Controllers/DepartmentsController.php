@@ -61,19 +61,43 @@ class DepartmentsController extends Controller
      */
     public function index()
     {
+
         $departments = $this->repository->where('parent_id', '=', 0)->get();
-        $allDepartment = $this->repository->pluck('tenphongban','id')->all();
         $htmlOption  = $this->repository->recursiveDepartment($parent_id='');
         $view_data = [
             'htmlOption'=>$htmlOption,
             'departments'=>$departments,
-            'allDepartment'=>$allDepartment,
         ];
-        return view('department.index',compact('view_data'));
+        return view('department.index',compact('view_data','flagDepartment'));
 
     }
 
+    public function loadAll($id_department){
+       //nếu có id cha ( parent_id = 0) thì load tất cả các phòng ban con
+       // if(!empty($id_department_parent)) {
+        $childs = $this->repository->where('parent_id', '=', $id_department)->get();
+        $employees = $this->employee
+            ->whereHas('departments',function ($sql) use ($id_department){
+                return $sql->where("departments.id",$id_department);
+            })->all();
+       // dd($employees);
+            $view_data = [
+                'employees'=>$employees,
+                "childs"=>$childs,
+                "id_department"=>$id_department
+            ];
+           // if(!empty($childs) || !empty($employees)){
+                $data = view('department.child', compact('view_data'))->render();
+           // }else{
+             //   $data = null;
+           // }
 
+            return \response([
+            "data" => $data,
+            'status' => 200
+        ]);
+
+    }
     /**
      * Hiển thị danh sách phong ban con.
      *
@@ -192,11 +216,11 @@ class DepartmentsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function editChildDepartment($id_department_child,$id_department_parent)
-    {
-       $department_child = $this->repository->find($id_department_child);
-        return view('employees.index', compact('department_child'));
-    }
+//    public function editChildDepartment($id_department_child,$id_department_parent)
+//    {
+//       $department_child = $this->repository->find($id_department_child);
+//        return view('employees.index', compact('department_child'));
+//    }
     /**
      * Show the form for editing the specified resource.
      *
@@ -208,9 +232,29 @@ class DepartmentsController extends Controller
     {
         $department = $this->repository->find($id);
         $htmlOption = $this->repository->recursiveDepartment($department->parent_id);
-        return view('department.edit', compact('department','htmlOption'));
-    }
+        $data = view('department.modal.edit', compact('department','htmlOption'))->render();
+        return \response([
+            "data" => $data,
+            'status' => 200
+        ]);
 
+    }
+    public function loadEmployeeAjax($id_department){
+            $employees = $this->employee
+                ->whereHas('departments',function ($sql) use ($id_department){
+                   return $sql->where("departments.id",$id_department);
+                })->all();
+        $childs = $this->repository->where('parent_id', '=', $id_department)->get();
+        $view_data = [
+            "childs"=>$childs,
+            "id_department_child"=>$id_department
+        ];
+            $data = view('department.loadEmployee', compact('childs','employees','id_department'))->render();
+            return \response([
+                "data" => $data,
+                'status' => 200
+            ]);
+        }
     /**
      * Update the specified resource in storage.
      *
@@ -227,18 +271,29 @@ class DepartmentsController extends Controller
             $this->validator->setId($id)->with($request->only('txtPhongBan'))->passesOrFail(DepartmentValidator::RULE_UPDATE);
             $tenphongban = $request->post('txtPhongBan');
             $parent_id = $request->post('parent_id');
+            //dd($tenphongban);
+            //dd($parent_id);
             $department = $this->repository->update(['tenphongban'=>$tenphongban,'parent_id'=>$parent_id],$id);
+           //dd();
             if ($department) {
-                return back()->with('message', "Cập nhật thành công");
+                //dd("ok");
+                return response()->json(['message'=> "Cập nhật thành công",'status'=>200,'nameDepartment'=>$department->tenphongban,'id'=>$department->id]);
             }
+           // dd("notok");
             throw new \Exception('Xảy ra lỗi khi cập nhật phong ban');
 
-        } catch (ValidatorException $e) {
-            return back()->withInput($request->all())->withErrors($e->getMessageBag());
+        }  catch (ValidatorException $e) {
+            return response()->json([
+                'status' => 421,
+                'message' => $e->getMessageBag()
+            ]);
         }
         catch (\Exception $exception) {
             report($exception);
-            return back()->with('message',"Cập nhật that bai" );
+            return response()->json([
+                'status' => 422,
+                'message' => $exception
+            ]);
 
         }
 
@@ -268,7 +323,7 @@ class DepartmentsController extends Controller
             }
             $department->delete();
             \DB::commit();
-            return redirect()->back()->with('message', 'Xóa thành công');
+            return redirect()->back()->with('messageDelete', 'Xóa thành công');
         }catch (\Exception $exception){
             \DB::rollback();
             report($exception);
@@ -279,16 +334,25 @@ class DepartmentsController extends Controller
     }
     public  function getListEmployee($department_id){
 
-       $employees = $this->employee->with('departments')->paginate();
-       $position = $this->position->all();
-
+        $employees = $this->employee->with("employeedepartment")->paginate();
+       $positions = $this->position->all();
         foreach ($employees as $employee) {
             $employee->checked = $employee->departments()->where('departments.id', $department_id)->count() ? true : false;
+            if($employee->departments()->where('departments.id', $department_id)->count()){
+                foreach($positions as $position){
+                    foreach($employee->employeedepartment as $item){
+                        if($item->position_id == $position->id){
+                            $employee->positionId = $position->id;
+                            $employee->positionTen = $position->tenchucvu;
+                        }
+                    }
+                }
+            }
         }
         $view_data =  [
             'department_id'=>$department_id,
             'employees' => $employees,
-            'position' => $position,
+            'positions' => $positions,
         ];
         $data = view("department.modal.addEmployee", compact("view_data"))->render();
         return \response([
@@ -311,12 +375,38 @@ class DepartmentsController extends Controller
                 'message' => 'Loại bỏ nhan vien khoi phong ban thành công.'
             ]);
         } else {
-            $employee->departments()->attach($department->id,['position_id'=>$position_id]);
+           $employee->departments()->attach($department->id,['position_id'=>$position_id]);
+            $department = $this->repository->find($department_id);
+            if ($department->employees()->where('employees.id', $employee_id)->count()) {
+                $employee = $department->employees()->where('employees.id', $employee_id)->first();
+            }
+            $view_data['id_department'] = $department_id;
+           $addRowEmployee = view("department.addRowLi",compact('employee','view_data'))->render();
             return \response([
+                'id'=>$department_id,
+                'data'=>$addRowEmployee,
                 'status' => 200,
                 'message' => 'Thêm nhan vien vao phong ban thành công.'
             ]);
         }
     }
+    public function destroyEmployee($department_id,$employee_id, Request $request)
+    {
 
+        $department = $this->repository->find($department_id);
+        $employee = $this->employee->find($employee_id);
+        if ($employee->departments()->where('departments.id', $department_id)->count()) {
+            $employee->departments()->detach($department->id);
+            return \response([
+                'status' => 200,
+                'id'=>$employee_id,
+                'message' => 'Loại bỏ nhan vien khoi phong ban thành công.'
+            ]);
+        } else {
+            return \response([
+                'status' => 500,
+                'message' => 'Loại bỏ nhan vien khoi phong ban thất bại.'
+            ]);
+        }
+    }
 }

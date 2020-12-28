@@ -1,4 +1,4 @@
-<div class="modal" id="editDepartment_{{ $department->id }}">
+
     <div class="modal-dialog">
         <div class="modal-content">
             <!-- Modal Header -->
@@ -20,7 +20,10 @@
                     <label>Chọn danh mục cha:</label>
                     <select class="form-control" id="parent_id" name="parent_id">
                         <option value="0">Chọn danh mục cha</option>
-                        {{--{!! $htmlOption !!}--}}
+                        @if (isset($htmlOption))
+                            {!! $htmlOption !!}
+                        @endif
+
                     </select>
                 </div>
             </div>
@@ -32,57 +35,56 @@
 
         </div>
     </div>
-</div>
-@push('scripts')
+
+
     <script>
         $(document).ready(function () {
 
-            {{--$('input#txteditPhongBan').on("keydown", function(e){--}}
-            {{--$('.invalid-feedback1').css({"display":"none"});--}}
-            {{--$('#alert-feedback').css({"display":"none"});--}}
-              {{--});--}}
-        {{--$("#btnUpdateDepartment").on('click',function (e) {--}}
-        {{--const url = $(this).attr("data-url");--}}
-        {{--//alert(url);--}}
-        {{--$.ajax({--}}
-        {{--method: "post",--}}
-        {{--url: url,--}}
-        {{--data: {--}}
-            {{--txtPhongBan: $("#txteditPhongBan").val(),--}}
-            {{--parent_id: $("#parent_id").val()--}}
-        {{--},--}}
-        {{--headers: {--}}
-        {{--'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')--}}
-        {{--},--}}
-        {{--dataType:'json',--}}
-        {{--})--}}
-        {{--.done(function( msg ) {--}}
-        {{--if(msg.status == 200){--}}
-            {{--$('#alert-feedback').addClass('alert alert-success aler-feedback');--}}
-            {{--$('#alert-feedback').css({"display":"block"});--}}
-            {{--$('.aler-feedback strong').html(msg.message);--}}
-            {{--$('.invalid-feedback1').css({"display":"none"});--}}
+            $('input#txteditPhongBan').on("keydown", function(e){
+            $('.invalid-feedback1').css({"display":"none"});
+            $('#alert-feedback').css({"display":"none"});
+              });
+        $("#btnUpdateDepartment").on('click',function (e) {
+        const url = $(this).attr("data-url");
+        //alert(url);
+        $.ajax({
+        method: "post",
+        url: url,
+        data: {
+            txtPhongBan: $("#txteditPhongBan").val(),
+            parent_id: $("#parent_id").val()
+        },
+        headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        dataType:'json',
+        })
+        .done(function( msg ) {
+        if(msg.status == 200){
 
-        {{--}else{--}}
-            {{--$('.invalid-feedback1').html(msg.message.txtPhongBan);--}}
-            {{--$('.invalid-feedback1').css({"display":"inline-block"});--}}
-            {{--$('.aler-feedback').css({"display":"none"});--}}
-            {{--$('#alert-feedback').removeClass('alert alert-success aler-feedback');--}}
-{{--}--}}
-        {{--$('#editDepartment').on('hidden.bs.modal', function () {--}}
-                {{--window.location.reload();--}}
-            {{--})--}}
-        {{--}--}}
+            console.log(msg);
+            $('#alert-feedback').addClass('alert alert-success aler-feedback');
+            $('#alert-feedback').css({"display":"block"});
+            $('.aler-feedback strong').html(msg.message);
+            $('.invalid-feedback1').css({"display":"none"});
+            $('.nameDepartment_'+msg.id).html(msg.nameDepartment);
 
-        {{--)--}}
-        {{--.fail(function( err ) {--}}
-        {{--const validator = (err.message ? err.message : "{{ "Lỗi hệ thống"  }}");--}}
-        {{--$('.invalid-feedback1').html(validator);--}}
-        {{--$('#alert-feedback').removeClass('alert alert-success aler-feedback');--}}
-        {{--});--}}
-        {{--})--}}
-        {{--})--}}
+        }else{
+            $('.invalid-feedback1').html(msg.message.txtPhongBan);
+            $('.invalid-feedback1').css({"display":"inline-block"});
+            $('.aler-feedback').css({"display":"none"});
+            $('#alert-feedback').removeClass('alert alert-success aler-feedback');
+            console.log(msg);
+}
+        })
+        .fail(function( err ) {
+        const validator = (err.message ? err.message : "{{ "Lỗi hệ thống"  }}");
+        $('.invalid-feedback1').html(validator);
+        $('#alert-feedback').removeClass('alert alert-success aler-feedback');
+        });
+        })
+        })
 
     </script>
-@endpush
+
 

@@ -33,11 +33,13 @@ Route::prefix('employees')->group(function () {
 
 Route::prefix('department')->group(function () {
     Route::get('index', [\App\Http\Controllers\DepartmentsController::class, 'index'])->name('department.index');
-    Route::post('toggle-employee/{id}', [\App\Http\Controllers\DepartmentsController::class, 'toggleEmployeeMappingDepartment'])->name('toggleEmployeeMappingDepartment');
-   // Route::get('detail/{id}', [\App\Http\Controllers\DepartmentsController::class, 'showChildDepartment'])->name('detailDepartment');
+    Route::get('loadAll/{id}', [\App\Http\Controllers\DepartmentsController::class, 'loadAll'])->name('department.loadAll');
+    Route::get('toggle-employee/{id}', [\App\Http\Controllers\DepartmentsController::class, 'toggleEmployeeMappingDepartment'])->name('toggleEmployeeMappingDepartment');
+    Route::get('load-employee/{id}', [\App\Http\Controllers\DepartmentsController::class, 'loadEmployeeAjax'])->name('department.loadEmployee');
     Route::get('get-list-employee/{department_id}', [\App\Http\Controllers\DepartmentsController::class, 'getListEmployee'])->name('getListEmployee');
     Route::post('store', [\App\Http\Controllers\DepartmentsController::class, 'store'])->name('department.store');
     Route::post('update/{id}', [\App\Http\Controllers\DepartmentsController::class, 'update'])->name('department.update');
     Route::get('destroy-department/{id}/', [\App\Http\Controllers\DepartmentsController::class, 'destroy'])->name('department.destroy');
+    Route::get('destroy-employee/{department_id}/{employee_id}/', [\App\Http\Controllers\DepartmentsController::class, 'destroyEmployee'])->name('department.destroyEmployee');
     Route::get('edit/{id}', [\App\Http\Controllers\DepartmentsController::class, 'edit'])->name('department.edit');
 });

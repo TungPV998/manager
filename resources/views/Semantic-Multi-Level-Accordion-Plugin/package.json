@@ -1,0 +1,36 @@
+{
+  "name": "jquery.simple.accordion",
+  "version": "0.1.0",
+  "description": "jquery simple accorion plugin.",
+  "keywords": [
+    "jquery-plugin",
+    "jquery",
+    "accordion"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/uuutee/jquery.simple.accordion.git"
+  },
+  "bugs": {
+    "url": "https://github.com/uuutee/jquery.simple.accordion/issues"
+  },
+  "author": {
+    "name": "uuutee",
+    "email": "uuuteenet@gmail.com",
+    "url": "https://github.com/uuutee/"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "jquery": ">=1.5.1"
+  },
+  "devDependencies": {
+    "browser-sync": "^2.23.6",
+    "gulp": "^3.9.1",
+    "gulp-clean-css": "^3.9.0",
+    "gulp-plumber": "^1.1.0",
+    "gulp-sass": "^3.1.0",
+    "gulp-sourcemaps": "^2.6.1",
+    "gulp-uglify": "^3.0.0",
+    "gulp-webserver": "^0.9.1"
+  }
+}

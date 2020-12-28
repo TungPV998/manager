@@ -25,9 +25,17 @@ class Employee extends Model implements Transformable
     protected $table = "employees";
 
     public function departments(){
-        return $this->belongsToMany(Department::class,"employeedepartment","employee_id","department_id")->using(EmplyeeDepartment::class)->withPivot('position_id');
+        return $this->belongsToMany(Department::class,"employeedepartment",
+            "employee_id","department_id")
+            ->as('ed')
+            ->using(EmplyeeDepartment::class)->withPivot('position_id');
     }
-    public function positions(){
-        return $this->belongsToMany(Position::class,'employee_position','position_id','employee_id')->using(Employeeposition::class);
+
+    public function employeedepartment()
+    {
+        return $this->hasMany(EmplyeeDepartment::class,'employee_id');
     }
+//    public function positions(){
+//        return $this->belongsToMany(Position::class,'employee_position','position_id','employee_id')->using(Employeeposition::class);
+//    }
 }

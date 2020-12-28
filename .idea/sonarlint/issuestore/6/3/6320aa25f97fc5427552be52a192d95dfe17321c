@@ -1,17 +1,39 @@
 
-;php:S125¤"Remove this commented out code.(Ú°à¬8­ëİûæ.
-;php:S125—"Remove this commented out code.(º·Şº8‘Üûæ.
-;php:S125Œ"Remove this commented out code.(º·Şº8‘Üûæ.
-aphp:S112l"FDefine and throw a dedicated exception instead of using a generic one.(ƒ´ãÓ8¥Œşîæ.
-d	php:S1192j"HDefine a constant instead of duplicating this literal "message" 4 times.(èĞÇ—8¥Œşîæ.
-m	php:S1192>"LDefine a constant instead of duplicating this literal "tenphongban" 3 times.(ó©ëäûÿÿÿÿ8¥Œşîæ.
-;php:S125"Remove this commented out code.(Ú°à¬8‘Üûæ.
-k	php:S1192="JDefine a constant instead of duplicating this literal "parent_id" 5 times.(Ÿ¥©Áøÿÿÿÿ8ÇÎ¬öæ.
-;php:S125¬"Remove this commented out code.(ûšÂé8­ëİûæ.
-K	php:S1481?"/Remove this unused "$parent_id" local variable.(Ù°  8¥Œşîæ.
-bphp:S112ç"FDefine and throw a dedicated exception instead of using a generic one.(äæ¼·8¼ÿÇşæ.
-h	php:S1192f"LDefine a constant instead of duplicating this literal "txtPhongBan" 4 times.(¬Ê¨¤8Õ”’áã.
-@php:S125·"Remove this commented out code.(èÉÕüÿÿÿÿÿ8­ëİûæ.
-;php:S125‘"Remove this commented out code.(º·Şº8‘Üûæ.
-@php:S125²"Remove this commented out code.(Ìˆ‘Šüÿÿÿÿ8­ëİûæ.
-@php:S125®"Remove this commented out code.(®ŞÌÏıÿÿÿÿ8­ëİûæ.
+f	php:S1192G"JDefine a constant instead of duplicating this literal "view_data" 5 times.(åï÷€8ËÎ™»é.
+K	php:S1125Õ")Remove the literal "false" boolean value.(‹’¡¨ûÿÿÿÿ8ññ¿Ìé.
+p	php:S1192Q"ODefine a constant instead of duplicating this literal "departments.id" 5 times.(•¸†üÿÿÿÿ8ËÎ™»é.
+;php:S125œ"Remove this commented out code.(Ú°à¬8‘Üûæ.
+;php:S125’"Remove this commented out code.(ğüá©8ËÎ™»é.
+@php:S125•"Remove this commented out code.(†İá‘üÿÿÿÿ8ËÎ™»é.
+Q	php:S1481ø"/Remove this unused "$view_data" local variable.(ÚÒÏ·üÿÿÿÿ8ËÎ™»é.
+;php:S125²"Remove this commented out code.(º·Şº8ËÎ™»é.
+n	php:S1117•"LRename "$employee" which has the same name as the field declared at line 38.(çıøæıÿÿÿÿ8º˜³Éé.
+;php:S125Ü"Remove this commented out code.(Ú°à¬8‘Üûæ.
+?php:S125M"Remove this commented out code.(Ïé·öüÿÿÿÿ8ËÎ™»é.
+@php:S125É"Remove this commented out code.(®ŞÌÏıÿÿÿÿ8­ëİûæ.
+;php:S125¿"Remove this commented out code.(Ú°à¬8­ëİûæ.
+;php:S125Ö"Remove this commented out code.(ò‚§°8äĞØËé.
+;php:S125—"Remove this commented out code.(§óù­8ËÎ™»é.
+n	php:S1117ú"LRename "$employee" which has the same name as the field declared at line 38.(çıøæıÿÿÿÿ8º˜³Éé.
+;php:S125Ç"Remove this commented out code.(ûšÂé8­ëİûæ.
+@php:S125Ò"Remove this commented out code.(èÉÕüÿÿÿÿÿ8­ëİûæ.
+;php:S125§"Remove this commented out code.(º·Şº8‘Üûæ.
+:php:S125Y"Remove this commented out code.(”ƒĞ¶8• ‚¼é.
+k	php:S1192A"JDefine a constant instead of duplicating this literal "parent_id" 8 times.(Ÿ¥©Áøÿÿÿÿ8ÇÎ¬öæ.
+@php:S125Í"Remove this commented out code.(Ìˆ‘Šüÿÿÿÿ8­ëİûæ.
+d	php:S1192a"HDefine a constant instead of duplicating this literal "status" 11 times.(’¬·ß8ËÎ™»é.
+J	php:S1125Õ"(Remove the literal "true" boolean value.(‹’¡¨ûÿÿÿÿ8ññ¿Ìé.
+i	php:S1192"LDefine a constant instead of duplicating this literal "txtPhongBan" 4 times.(¬Ê¨¤8Õ”’áã.
+m	php:S1192E"LDefine a constant instead of duplicating this literal "departments" 3 times.(—íÉìùÿÿÿÿ8ËÎ™»é.
+h	php:S1192V"GDefine a constant instead of duplicating this literal "childs" 4 times.(½»—õüÿÿÿÿ8ËÎ™»é.
+?php:S125S"Remove this commented out code.(—˜“—üÿÿÿÿ8ËÎ™»é.
+bphp:S112‡"FDefine and throw a dedicated exception instead of using a generic one.(ƒ´ãÓ8¥Œşîæ.
+bphp:S112›"FDefine and throw a dedicated exception instead of using a generic one.(äæ¼·8¼ÿÇşæ.
+f	php:S1192U"JDefine a constant instead of duplicating this literal "employees" 4 times.(ŞòÂ’8ËÎ™»é.
+e	php:S1192…"HDefine a constant instead of duplicating this literal "message" 9 times.(èĞÇ—8¥Œşîæ.
+:php:S125["Remove this commented out code.(¡Õ±š8• ‚¼é.
+o	php:S1192W"NDefine a constant instead of duplicating this literal "id_department" 3 times.(âæò®ıÿÿÿÿ8ËÎ™»é.
+;php:S125¬"Remove this commented out code.(º·Şº8‘Üûæ.
+;php:S125š"Remove this commented out code.(’¾®8ËÎ™»é.
+K	php:S1481B"/Remove this unused "$parent_id" local variable.(Ù°  8¥Œşîæ.
+@php:S125ç"Remove this commented out code.(—˜“—üÿÿÿÿ8»ùÎÌé.
