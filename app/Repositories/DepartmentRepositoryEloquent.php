@@ -82,4 +82,14 @@ class DepartmentRepositoryEloquent extends BaseRepository implements DepartmentR
         }
         return $this->htmlSelection;
     }
+
+    public function getParentCatalog(){
+        return $this->makeModel()->all()->where("parent_id",0);
+    }
+    public function loadChildDepartment($id_department){
+        return $this->all()->where('parent_id', '=', $id_department);
+    }
+
+
+
 }

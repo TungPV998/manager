@@ -25,7 +25,7 @@ class EmplyeeDepartment extends Pivot
     protected $table = "EmployeeDepartment";
 
 
-    public function positions(){
+    public function position(){
         return $this->belongsTo(Position::class,"position_id","id");
     }
     public function department()

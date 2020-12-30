@@ -6,6 +6,7 @@ use App\Criteria\BuildDataSearchForRequest;
 use App\Criteria\DepartmentRequestCriteria;
 use App\Criteria\EmployeeCriteria;
 use App\Criteria\EmployeeRequestCriteria;
+use App\Model\EmplyeeDepartment;
 use App\Repositories\EmployeeRepository;
 use App\Repositories\PositionRepository;
 use Illuminate\Http\Request;
@@ -61,9 +62,8 @@ class DepartmentsController extends Controller
      */
     public function index()
     {
-
-        $departments = $this->repository->where('parent_id', '=', 0)->get();
-        $htmlOption  = $this->repository->recursiveDepartment($parent_id='');
+     $departments = $this->repository->getParentCatalog();
+        $htmlOption  = $this->repository->recursiveDepartment('');
         $view_data = [
             'htmlOption'=>$htmlOption,
             'departments'=>$departments,
@@ -73,24 +73,10 @@ class DepartmentsController extends Controller
     }
 
     public function loadAll($id_department){
-       //nếu có id cha ( parent_id = 0) thì load tất cả các phòng ban con
-       // if(!empty($id_department_parent)) {
-        $childs = $this->repository->where('parent_id', '=', $id_department)->get();
-        $employees = $this->employee
-            ->whereHas('departments',function ($sql) use ($id_department){
-                return $sql->where("departments.id",$id_department);
-            })->all();
-       // dd($employees);
-            $view_data = [
-                'employees'=>$employees,
-                "childs"=>$childs,
-                "id_department"=>$id_department
-            ];
-           // if(!empty($childs) || !empty($employees)){
+        $view_data['childs'] = $this->repository->loadChildDepartment($id_department);
+        $view_data['employees'] = $this->employee->getEmployeeInDepartment($id_department);
+        $view_data['id_department'] = $id_department;
                 $data = view('department.child', compact('view_data'))->render();
-           // }else{
-             //   $data = null;
-           // }
 
             return \response([
             "data" => $data,
@@ -98,22 +84,7 @@ class DepartmentsController extends Controller
         ]);
 
     }
-    /**
-     * Hiển thị danh sách phong ban con.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function showChildDepartment($id_department_child)
-    {
-        $childs = $this->repository->withCount("employees")->findWhere(["parent_id"=>$id_department_child])->all();
-        $parent = $this->repository->findWhere(["id"=>$id_department_child])->first();
-        $view_data = [
-            "childs"=>$childs,
-            "parent"=>$parent,
-            "id_department_child"=>$id_department_child
-        ];
-        return view('child_department.index',compact('view_data'));
-    }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -145,89 +116,7 @@ class DepartmentsController extends Controller
 
     }
 
-    /**
-     * Lưu thêm mới giá trị phòng ban con
-     *
-     * @param  int $id
-     *
-     * @return \Illuminate\Http\Response
-     */
-//    public function storeChildDepartment(Request $request,$id_parent)
-//    {
-//        try {
-//            $this->validator->with($request->only('txtPhongBan'))->passesOrFail(DepartmentValidator::RULE_CREATE);
-//            $tenphongban = $request->post('txtPhongBan');
-//            $department = $this->repository->create(['tenphongban'=>$tenphongban,'parent_id'=>$id_parent]);
-//            $response = $department ? [
-//                'message' => "Tạo mới thành công",
-//                'status' => 200,
-//            ] : [
-//                'message' => "Tạo mới thất bại",
-//                'status' => 500,
-//            ];
-//        } catch (ValidatorException $e) {
-//            $response = [
-//                'status' => 422,
-//                'message' => $e->getMessageBag()
-//            ];
-//        }
-//        catch(Exception $exception) {
-//            $response = [
-//                'message' => "Tạo mới thất bại",
-//                'status' => 500,
-//            ];
-//        }
-//        return response()->json($response);
-//    }
 
-    /**
-     * Hiển thị danh sách nhân viên trongh phong ban
-     *
-     * @param  int $id
-     *
-     * @return \Illuminate\Http\Response
-     */
-//    public function showEmployee($id_department_child,$id_department_parent,BuildDataSearchForRequest $BuildDataSearchForRequest)
-//    {
-//        $BuildDataSearchForRequest = $BuildDataSearchForRequest
-//            ->setSearch('', [
-//                'ten' => 'name_employees',
-//                'departments.id' => 'departmentSlect',
-//            ])
-//            ->setSearchFields([''])
-//            ->setOrderBy('id')
-//            ->setSortedBy('desc');
-//        $employees = $this->employee->with('positions')
-//            ->whereHas('departments',function ($sql) use ($id_department_child){
-//                return $sql->where('departments.id','=',$id_department_child);
-//            })
-//            ->pushCriteria(new EmployeeRequestCriteria($BuildDataSearchForRequest->getDataSearch()))
-//            ->paginate();
-//        $id_parent = $id_department_parent;
-//        $id_child = $id_department_child;
-//        $childDepartment = $this->repository->getInforChildDepartment($id_department_child);
-//
-//        return view('employees.index', compact('employees','id_parent','id_child','childDepartment'));
-//    }
-    /**
-     * sửa ten phòng ban con
-     *
-     * @param  int $id
-     *
-     * @return \Illuminate\Http\Response
-     */
-//    public function editChildDepartment($id_department_child,$id_department_parent)
-//    {
-//       $department_child = $this->repository->find($id_department_child);
-//        return view('employees.index', compact('department_child'));
-//    }
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int $id
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
         $department = $this->repository->find($id);
@@ -240,15 +129,8 @@ class DepartmentsController extends Controller
 
     }
     public function loadEmployeeAjax($id_department){
-            $employees = $this->employee
-                ->whereHas('departments',function ($sql) use ($id_department){
-                   return $sql->where("departments.id",$id_department);
-                })->all();
-        $childs = $this->repository->where('parent_id', '=', $id_department)->get();
-        $view_data = [
-            "childs"=>$childs,
-            "id_department_child"=>$id_department
-        ];
+        $employees =  $this->employee->getEmployeeInDepartment($id_department);
+        $childs = $this->repository->loadChildDepartment($id_department);
             $data = view('department.loadEmployee', compact('childs','employees','id_department'))->render();
             return \response([
                 "data" => $data,
@@ -332,23 +214,23 @@ class DepartmentsController extends Controller
         }
 
     }
+
+
     public  function getListEmployee($department_id){
 
-        $employees = $this->employee->with("employeedepartment")->paginate();
+        $employees = $this->employee->getlistEmployeeIsActiveOrNot($department_id);
        $positions = $this->position->all();
         foreach ($employees as $employee) {
-            $employee->checked = $employee->departments()->where('departments.id', $department_id)->count() ? true : false;
-            if($employee->departments()->where('departments.id', $department_id)->count()){
-                foreach($positions as $position){
-                    foreach($employee->employeedepartment as $item){
-                        if($item->position_id == $position->id){
-                            $employee->positionId = $position->id;
-                            $employee->positionTen = $position->tenchucvu;
-                        }
-                    }
-                }
+            $employee_department = $employee->employeedepartment;
+            $employee->checked = false;
+            $employee->position= null;
+            if(isset($employee_department[0]))
+            {
+                $employee->checked = true;
+                $employee->position = $employee_department[0]->position;
             }
         }
+
         $view_data =  [
             'department_id'=>$department_id,
             'employees' => $employees,

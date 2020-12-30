@@ -34,5 +34,6 @@ class EmployeepositionRepositoryEloquent extends BaseRepository implements Emplo
     {
         $this->pushCriteria(app(RequestCriteria::class));
     }
+
     
 }

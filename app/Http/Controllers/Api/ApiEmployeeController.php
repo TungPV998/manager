@@ -68,9 +68,11 @@ class ApiEmployeeController extends Controller
     public function store(Request $request)
     {
         try {
-            $data = $request->only(['ten', 'sodienthoai', 'diachi', 'gioitinh', 'ngaybatdau', 'ngayketthuc']);
+            $data = $request->only(['ten', 'sodienthoai','img', 'diachi', 'gioitinh']);
             $this->validator->with($data)->passesOrFail(EmployeeValidator::RULE_CREATE);
-            $data['img'] = $request->imgProfile ?? "https://s2.dmcdn.net/v/GPhvn1NfooEdLQqFx/x1080";
+           // $data['img'] = $data['imgProfile'] ?? "https://s2.dmcdn.net/v/GPhvn1NfooEdLQqFx/x1080";
+         ///  dd($data);
+
              $this->repository->create($data);
             return response()->json(['message'=>"Tạo mới nhân viên thành công","status"=>200]);
         } catch (ValidatorException $e) {
@@ -136,14 +138,10 @@ class ApiEmployeeController extends Controller
     public function update(Request $request, $id)
     {
         try {
-            $data = $request->only(['ten', 'sodienthoai', 'diachi', 'gioitinh', 'ngaybatdau', 'ngayketthuc']);
+            dd($request->all());
+            $data = $request->only(['ten', 'sodienthoai','img','diachi', 'gioitinh']);
+          dd($data);
             $this->validator->with($data)->setId($id)->passesOrFail(EmployeeValidator::RULE_UPDATE);
-            if (isset($request->imgProfile)) {
-                $data['img'] = $request->imgProfile;
-            }else{
-                $employee = $this->repository->find($id);
-                $data['img'] = $employee->img;
-            }
             $this->repository->update($data, $id);
             return response()->json(['message'=>"Cập nhật nhân viên thành công","status"=>200]);
         } catch (ValidatorException $e) {

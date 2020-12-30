@@ -2,24 +2,19 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="dadca34a-3a0c-4a4f-895f-d607d2e34d5c" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/6/3/6320aa25f97fc5427552be52a192d95dfe17321c" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/6/3/6320aa25f97fc5427552be52a192d95dfe17321c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/6/b/6b9a783d9b43fee50fd28f56dbd1856d2608f305" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/6/b/6b9a783d9b43fee50fd28f56dbd1856d2608f305" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/a/9/a95c9b5cb25c26491ce8ba778e36ac1958bcd437" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/a/9/a95c9b5cb25c26491ce8ba778e36ac1958bcd437" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/b/6/b6712224f5a7d070986eb60ee47d9bfcb9a4116c" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/b/6/b6712224f5a7d070986eb60ee47d9bfcb9a4116c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/index.pb" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/index.pb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Api/ApiEmployeeController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Api/ApiEmployeeController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/DepartmentsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/DepartmentsController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Model/Department.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Model/Department.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Model/Employee.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Model/Employee.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Model/EmplyeeDepartment.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Model/EmplyeeDepartment.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Model/Position.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Model/Position.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Repositories/DepartmentRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Repositories/DepartmentRepository.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Repositories/DepartmentRepositoryEloquent.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Repositories/DepartmentRepositoryEloquent.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Repositories/EmployeeRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Repositories/EmployeeRepository.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Repositories/EmployeeRepositoryEloquent.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Repositories/EmployeeRepositoryEloquent.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Repositories/EmployeepositionRepositoryEloquent.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Repositories/EmployeepositionRepositoryEloquent.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Validators/EmployeeValidator.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Validators/EmployeeValidator.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/department/addRowLi.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/department/addRowLi.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/department/child.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/department/child.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/department/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/department/index.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/department/modal/addEmployee.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/department/modal/addEmployee.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/department/modal/delete.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/department/modal/delete.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/department/modal/edit.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/department/modal/edit.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/layout/app.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layout/app.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/department/modal/deleteDepartment.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/department/modal/deleteDepartment.blade.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -33,73 +28,49 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/resources/views/department/index.blade.php">
+        <entry file="file://$PROJECT_DIR$/routes/api.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="858">
-              <caret line="39" column="49" selection-start-line="39" selection-start-column="49" selection-end-line="39" selection-end-column="49" />
+            <state relative-caret-position="371">
+              <caret line="25" column="22" selection-start-line="25" selection-start-column="22" selection-end-line="25" selection-end-column="22" />
+              <folding>
+                <element signature="e#7#35#0#PHP" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/resources/views/department/child.blade.php">
+        <entry file="file://$PROJECT_DIR$/composer.json">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1232">
-              <caret line="56" selection-start-line="56" selection-end-line="56" selection-end-column="33" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/resources/views/department/modal/addEmployee.blade.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="726">
-              <caret line="33" column="70" selection-start-line="33" selection-start-column="70" selection-end-line="33" selection-end-column="70" />
+            <state relative-caret-position="176">
+              <caret line="17" column="40" lean-forward="true" selection-start-line="17" selection-start-column="40" selection-end-line="17" selection-end-column="40" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/Http/Controllers/DepartmentsController.php">
+        <entry file="file://$PROJECT_DIR$/app/Validators/EmployeeValidator.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-614">
-              <caret line="334" column="53" selection-start-line="334" selection-start-column="53" selection-end-line="334" selection-end-column="53" />
-              <folding>
-                <element signature="e#40#83#0#PHP" expanded="true" />
-                <element signature="e#8049#8749#0#PHP" />
-                <element signature="e#10397#11305#0#PHP" />
-                <element signature="e#11310#12505#0#PHP" />
-              </folding>
+            <state relative-caret-position="195">
+              <caret line="24" column="15" selection-start-line="24" selection-start-column="15" selection-end-line="24" selection-end-column="15" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/Model/Employee.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="682">
-              <caret line="33" column="38" selection-start-line="33" selection-start-column="20" selection-end-line="33" selection-end-column="38" />
-              <folding>
-                <element signature="e#29#68#0#PHP" expanded="true" />
-              </folding>
+        <entry file="file://$PROJECT_DIR$/storage/logs/laravel.log">
+          <provider selected="true" editor-type-id="LogFileEditorProvider">
+            <state relative-caret-position="908952">
+              <caret line="41316" selection-start-line="41316" selection-end-line="41316" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/resources/views/layout/app.blade.php">
+        <entry file="file://$PROJECT_DIR$/bootstrap/app.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1650">
-              <caret line="75" column="44" selection-start-line="75" selection-start-column="28" selection-end-line="75" selection-end-column="44" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/resources/views/department/modal/list.blade.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <caret column="34" selection-start-column="34" selection-end-column="34" />
+            <state relative-caret-position="616">
+              <caret line="37" selection-start-line="37" selection-end-line="37" />
             </state>
           </provider>
         </entry>
@@ -164,7 +135,6 @@
         <option value="$PROJECT_DIR$/app/Http/Response.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/Api/EmployeeController.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/Controller.php" />
-        <option value="$PROJECT_DIR$/app/Validators/EmployeeValidator.php" />
         <option value="$PROJECT_DIR$/routes/api.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/Api/ApiEmployeeController.php" />
         <option value="$PROJECT_DIR$/resources/views/department/modal/delete.blade.php" />
@@ -182,6 +152,7 @@
         <option value="$PROJECT_DIR$/resources/views/department/index.blade.php" />
         <option value="$PROJECT_DIR$/resources/views/department/modal/addEmployee.blade.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/DepartmentsController.php" />
+        <option value="$PROJECT_DIR$/app/Validators/EmployeeValidator.php" />
       </list>
     </option>
   </component>
@@ -308,7 +279,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -344,6 +314,14 @@
               <item name="Manager" type="b2602c69:ProjectViewProjectNode" />
               <item name="Manager" type="462c0819:PsiDirectoryNode" />
               <item name="app" type="462c0819:PsiDirectoryNode" />
+              <item name="Http" type="462c0819:PsiDirectoryNode" />
+              <item name="Controllers" type="462c0819:PsiDirectoryNode" />
+              <item name="Api" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Manager" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Manager" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
               <item name="Model" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -357,6 +335,11 @@
               <item name="Manager" type="462c0819:PsiDirectoryNode" />
               <item name="app" type="462c0819:PsiDirectoryNode" />
               <item name="Validators" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Manager" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Manager" type="462c0819:PsiDirectoryNode" />
+              <item name="bootstrap" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="Manager" type="b2602c69:ProjectViewProjectNode" />
@@ -418,10 +401,22 @@
               <item name="Manager" type="462c0819:PsiDirectoryNode" />
               <item name="storage" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="Manager" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Manager" type="462c0819:PsiDirectoryNode" />
+              <item name="storage" type="462c0819:PsiDirectoryNode" />
+              <item name="logs" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Manager" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Manager" type="462c0819:PsiDirectoryNode" />
+              <item name="vendor" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -484,7 +479,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="364095000" />
+    <option name="totallyTimeSpent" value="364118000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -496,10 +491,10 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="1358" y="-8" width="1382" height="744" extended-state="6" />
+    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.4991453" visible="true" weight="0.20361991" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.4991453" visible="true" weight="0.17420815" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="npm" order="2" sideWeight="0.50085473" side_tool="true" weight="0.20739065" />
       <window_info id="Favorites" order="3" side_tool="true" />
@@ -703,8 +698,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/routes/api.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="393">
-          <caret line="22" column="22" selection-start-line="22" selection-start-column="22" selection-end-line="22" selection-end-column="22" />
+        <state relative-caret-position="371">
+          <caret line="25" column="22" selection-start-line="25" selection-start-column="22" selection-end-line="25" selection-end-column="22" />
           <folding>
             <element signature="e#7#35#0#PHP" expanded="true" />
           </folding>
@@ -742,8 +737,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/Validators/EmployeeValidator.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="24" column="34" selection-start-line="24" selection-start-column="26" selection-end-line="24" selection-end-column="34" />
+        <state relative-caret-position="195">
+          <caret line="24" column="15" selection-start-line="24" selection-start-column="15" selection-end-line="24" selection-end-column="15" />
         </state>
       </provider>
     </entry>

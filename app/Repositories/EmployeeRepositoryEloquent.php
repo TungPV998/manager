@@ -65,6 +65,17 @@ class EmployeeRepositoryEloquent extends BaseRepository implements EmployeeRepos
     public function getListEmployee(){
         return $this->with(['positions','departments'])->paginate();
     }
+    public function getEmployeeInDepartment($id_department){
+        return  $this
+            ->whereHas('departments',function ($sql) use ($id_department){
+                return $sql->where("departments.id",$id_department);
+            })->all();
+    }
+    public function getlistEmployeeIsActiveOrNot($id_department){
+        return $this->with(["employeedepartment"=>function($sql) use($id_department){
+            $sql->where('employeedepartment.department_id',$id_department);
+        }])->paginate();
+    }
 
 
 }

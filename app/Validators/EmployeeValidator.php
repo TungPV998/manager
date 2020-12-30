@@ -22,7 +22,7 @@ class EmployeeValidator extends LaravelValidator
             'ten' => 'required|string|max:255',
             'diachi' => 'required|string|max:255',
             'sodienthoai' => 'required|numeric',
-           'imgProfile'=>"required|image|mimes:jpeg,png,jpg,gif,svg"
+           'img'=>"required|image|mimes:jpeg,png,jpg,gif,svg"
         ],
         ValidatorInterface::RULE_UPDATE => [
             'ten' => 'required|string|max:255',

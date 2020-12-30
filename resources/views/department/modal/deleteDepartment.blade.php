@@ -1,5 +1,5 @@
 
-    <div style="" class="modal fade" id="deleteEmployee_{{$employee->id}}" tabindex="-1" role="dialog" aria-hidden="true">
+    <div style="" class="modal fade" id="deleteEmployee_{{$employee->id}}_{{ $idDepartment }}" tabindex="-1" role="dialog" aria-hidden="true">
         @csrf
         <div class="modal-dialog" role="document">
             <div class="modal-content">
