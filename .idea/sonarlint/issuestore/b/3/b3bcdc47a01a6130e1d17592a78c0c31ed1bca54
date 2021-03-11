@@ -1,0 +1,44 @@
+
+\	php:S1192b"HDefine a constant instead of duplicating this literal "driver" 39 times.(”ˆî}
+\	php:S1192b"HDefine a constant instead of duplicating this literal "session" 3 times.(”ˆî}
+d	php:S1192"IDefine a constant instead of duplicating this literal "username" 5 times.(…´éÔøÿÿÿÿ
+]	php:S1192"GDefine a constant instead of duplicating this literal "single" 3 times.(Åš®Í
+a	php:S1192–"FDefine a constant instead of duplicating this literal "level" 6 times.(€Ÿ¿Šùÿÿÿÿ
+^	php:S1192„"HDefine a constant instead of duplicating this literal "manager" 4 times.(Îç·‰
+]	php:S1192¨"GDefine a constant instead of duplicating this literal "public" 4 times.(ÊƒÒä
+^	php:S1192©"HDefine a constant instead of duplicating this literal "monolog" 3 times.(“üÒš
+c	php:S1192‹"HDefine a constant instead of duplicating this literal "options" 5 times.(­ùÕ³ùÿÿÿÿ
+a	php:S1192”"KDefine a constant instead of duplicating this literal "connection" 6 times.(’…Äâ
+`	php:S1192É"JDefine a constant instead of duplicating this literal "127.0.0.1" 6 times.(à¤ùÚ
+c	php:S1192c"IDefine a constant instead of duplicating this literal "provider" 5 times.(íµÚíşÿÿÿÿ
+_	php:S1192é"IDefine a constant instead of duplicating this literal "postmark" 3 times.(¤Õ—
+c	php:S1192Ì"HDefine a constant instead of duplicating this literal "enabled" 5 times.(—È•üıÿÿÿÿ
+g	php:S1192ƒ"LDefine a constant instead of duplicating this literal "connections" 3 times.(ÁÏàéøÿÿÿÿ
+a	php:S1192 "FDefine a constant instead of duplicating this literal "cache" 9 times.(‚‚ûãÿÿÿÿÿ
+e	php:S1192®"JDefine a constant instead of duplicating this literal "database" 13 times.(şÙÍÅÿÿÿÿÿ
+a	php:S1192â"FDefine a constant instead of duplicating this literal "paths" 4 times.(ßî±Úøÿÿÿÿ
+`	php:S1192"FDefine a constant instead of duplicating this literal "local" 4 times.(²˜Ñıÿÿÿÿ
+b	php:S1192˜"LDefine a constant instead of duplicating this literal "retry_after" 3 times.(ü´ñ¢
+\	php:S1192ƒ"FDefine a constant instead of duplicating this literal "theme" 3 times.( ıš‘
+a	php:S1192‘"FDefine a constant instead of duplicating this literal "redis" 8 times.(‘Ò¥ªùÿÿÿÿ
+]	php:S1192Ù"GDefine a constant instead of duplicating this literal "region" 4 times.(œà´
+j	php:S1192•"ODefine a constant instead of duplicating this literal "prefix_indexes" 3 times.(ÔŸıôÿÿÿÿÿ
+a	php:S1192†"FDefine a constant instead of duplicating this literal "stack" 3 times.(´€÷×ıÿÿÿÿ
+\	php:S1192Š"FDefine a constant instead of duplicating this literal "queue" 5 times.(–òÛã
+	php:S1192•"uDefine a constant instead of duplicating this literal "C:\\laragon\\www\\Manager\\storage\\logs/laravel.log" 3 times.(±ò–Øşÿÿÿÿ
+_	php:S1192‚"IDefine a constant instead of duplicating this literal "default" 14 times.(ÈâéŸ
+b	php:S1192‰"GDefine a constant instead of duplicating this literal "secret" 6 times.(ô¹¢Ìøÿÿÿÿ
+a	php:S1192©"FDefine a constant instead of duplicating this literal "array" 4 times.(µÙÆÏúÿÿÿÿ
+[	php:S1192y"FDefine a constant instead of duplicating this literal "table" 6 times.(•×ÎÏ
+e	php:S1192Ø"JDefine a constant instead of duplicating this literal "transport" 7 times.(¥ºèàüÿÿÿÿ
+b	php:S1192Ş"GDefine a constant instead of duplicating this literal "prefix" 7 times.(‹½´éøÿÿÿÿ
+c	php:S1192å"HDefine a constant instead of duplicating this literal "mailgun" 3 times.(·»½Šşÿÿÿÿ
+c	php:S1192«"HDefine a constant instead of duplicating this literal "handler" 3 times.(ıï¢ãşÿÿÿÿ
+d	php:S1192Û"IDefine a constant instead of duplicating this literal "endpoint" 3 times.(§‹°ÿÿÿÿÿ
+[	php:S1192"FDefine a constant instead of duplicating this literal "debug" 6 times.(èñ•‚
+_	php:S1192"IDefine a constant instead of duplicating this literal "password" 6 times.(¯¯‡ 
+b	php:S1192Ä"GDefine a constant instead of duplicating this literal "params" 3 times.(˜®‹Òüÿÿÿÿ
+a	php:S1192ı"FDefine a constant instead of duplicating this literal "mysql" 4 times.(Ş°ª¸ÿÿÿÿÿ
+^	php:S1192’"HDefine a constant instead of duplicating this literal "charset" 3 times.(†‡Ø
+[	php:S1192\"FDefine a constant instead of duplicating this literal "users" 6 times.(ƒ™‚
+`	php:S1192Ù"JDefine a constant instead of duplicating this literal "us-east-1" 4 times.(œà´

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Criteria\BuildDataSearchForRequest;
+use App\Criteria\EmployeeRequestCriteria;
 use App\Model\Department;
 use App\Model\Employee;
 use App\Model\Position;
@@ -43,13 +45,12 @@ class EmployeesController extends Controller
      * @param EmployeeRepository $repository
      * @param EmployeeValidator $validator
      */
-    public function __construct(DepartmentRepository $department, PositionRepository $position, DepartmentRepository $departmentRepository, EmployeeRepository $repository, EmployeeValidator $validator)
+    public function __construct(DepartmentRepository $departmentRepository,PositionRepository $position, EmployeeRepository $repository, EmployeeValidator $validator)
     {
         $this->position = $position;
-        $this->department = $department;
         $this->repository = $repository;
-        $this->validator = $validator;
         $this->departmentRepository = $departmentRepository;
+        $this->validator = $validator;
     }
 
     /**
@@ -57,9 +58,25 @@ class EmployeesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(BuildDataSearchForRequest $BuildDataSearchForRequest)
     {
-
+        $BuildDataSearchForRequest = $BuildDataSearchForRequest
+            ->setSearch('', [
+                'ten' => 'name_employees',
+                'departments.id' =>'departmentSelect'
+            ])
+            //->setSearchFields(['ten'=>'name_employee','departments.id'=>'departmentSelect'])
+            ->setOrderBy('id')
+            ->setSortedBy('desc');
+        $employees = $this->repository->with('departments')
+            ->pushCriteria(new EmployeeRequestCriteria($BuildDataSearchForRequest->getDataSearch()))
+            ->paginate();
+        $departments = $this->departmentRepository->where('parent_id','!=',0)->get();
+        $view_data = [
+            'department'=> $departments,
+            'employees' => $employees
+        ];
+        return view('employees.index',compact('view_data'));
     }
 
     /**
@@ -75,13 +92,11 @@ class EmployeesController extends Controller
     {
         try {
             \DB::beginTransaction();
-            $data = $request->only(['ten', 'sodienthoai', 'diachi', 'gioitinh', 'macv', 'ngaybatdau', 'ngayketthuc']);
+            $data = $request->only(['ten', 'sodienthoai', 'diachi', 'gioitinh', 'ngaybatdau', 'ngayketthuc']);
             $this->validator->with($data)->passesOrFail(EmployeeValidator::RULE_CREATE);
             $path = Storage::putFile('avatars', $request->file('imgProfile'));
             $data['img'] = $path;
             $employee = $this->repository->create($data);
-            $department = $this->department->find($request->department);
-            $department->employees()->attach($employee->id, ['position_id' => $request->macv]);
             \DB::commit();
             return redirect()->back()->with('message', "Thêm mới thành công");
         } catch (ValidatorException $e) {
@@ -93,11 +108,9 @@ class EmployeesController extends Controller
         }
     }
 
-    public function displayFormAdd($id)
+    public function displayFormAdd()
     {
-        $departments = $this->department->where("parent_id", $id)->get();
-        $positions = $this->position->all();
-        return view('employees.add', compact('departments', 'positions'));
+        return view('employees.add');
     }
 
     /**
@@ -107,16 +120,11 @@ class EmployeesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function show($id, $parent_id)
+    public function show($id)
     {
-        $departments = $this->department->where("parent_id", $parent_id)->get();
-        $positions = $this->position->all();
-        $employee = $this->repository->showInforEmployee($id);
-        $dpmSelect = $this->repository->with('departments')->where("employees.id", $id)->first();
-        foreach ($dpmSelect->departments as $id_child) {
-            $id_child_department = $id_child;
-        }
-        return view('employees.update', compact('employee', 'departments', 'positions', 'id_child_department'));
+        $employee = $this->repository->find($id);
+
+        return view('employees.update', compact('employee'));
     }
 
     /**
@@ -147,8 +155,8 @@ class EmployeesController extends Controller
     {
         try {
             \DB::beginTransaction();
-            $data = $request->only(['ten', 'sodienthoai', 'diachi', 'gioitinh', 'macv', 'ngaybatdau', 'ngayketthuc']);
-            $this->validator->with($data)->passesOrFail(EmployeeValidator::RULE_UPDATE);
+            $data = $request->only(['ten', 'sodienthoai', 'diachi', 'gioitinh', 'ngaybatdau', 'ngayketthuc']);
+            $this->validator->with($data)->setId($id)->passesOrFail(EmployeeValidator::RULE_UPDATE);
             if (isset($request->imgProfile)) {
                 $path = Storage::putFile('avatars', $request->imgProfile);
             } else {
@@ -156,8 +164,6 @@ class EmployeesController extends Controller
             }
             $data['img'] = $path;
             $employee = $this->repository->update($data, $id);
-            $employees = $this->repository->find($id);
-            $employees->departments()->updateExistingPivot($request->department, ['position_id' => $request->post('macv')]);
             \DB::commit();
             return redirect()->back()->with('message', "Cập nhật thành công");
         } catch (ValidatorException $e) {
@@ -178,17 +184,12 @@ class EmployeesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id, $childDepartment_id)
+    public function destroy($id)
     {
         try {
-            \DB::beginTransaction();
             $deleted = $this->repository->delete($id);
-            $department = $this->department->find($childDepartment_id);
-            $department->employees()->detach($id);
-            \DB::commit();
             return redirect()->back()->with('message', 'Xóa Thành Công');
         } catch (\Exception $exception) {
-            \DB::rollback();
             report($exception);
             return back()->withError($exception->getMessage());
         }

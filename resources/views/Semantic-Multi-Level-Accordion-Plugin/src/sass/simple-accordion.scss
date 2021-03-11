@@ -1,0 +1,52 @@
+.ac {
+  ul {
+    display: none;
+  }
+
+  &-list {
+  }
+  &-list-item {
+    position: relative;
+  }
+  &-anchor {
+  }
+  &-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 1rem;
+    height: 1rem;
+    position: absolute;
+    top: 1rem;
+    right: 10px;
+
+    &::after {
+      content: "+";
+    }
+  }
+
+  .is-open {
+    > .ac-list {
+      display: block;
+    }
+
+    > .ac-btn::after {
+      content: "-";
+    }
+  }
+}
+
+.ac--animation {
+  ul {
+    display: block;
+    max-height: 0;
+    transition: max-height 0.3s ease;
+    overflow: hidden;
+  }
+
+  .is-open {
+    > .ac-list {
+      max-height: 500px;
+    }
+  }
+}

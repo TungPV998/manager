@@ -23,4 +23,11 @@ class Position extends Model implements Transformable
     protected $guarded = [];
 
     protected $table = "positions";
+
+    public function employee(){
+        return $this->belongsToMany(Employee::class,'employee_position','employee_id','position_id')->using(Employeeposition::class);
+    }
+    public function employeedepartment(){
+        return $this->hasMany(EmplyeeDepartment::class,"position_id","id");
+    }
 }

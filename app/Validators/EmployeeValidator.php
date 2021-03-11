@@ -22,12 +22,12 @@ class EmployeeValidator extends LaravelValidator
             'ten' => 'required|string|max:255',
             'diachi' => 'required|string|max:255',
             'sodienthoai' => 'required|numeric',
-           'imgProfile'=>"image|mimes:jpeg,png,jpg,gif,svg"
+           'img'=>"required|image|mimes:jpeg,png,jpg,gif,svg"
         ],
         ValidatorInterface::RULE_UPDATE => [
             'ten' => 'required|string|max:255',
             'diachi' => 'required|string|max:255',
-            'sodienthoai' => 'required|string|max:11',
+            'sodienthoai' => 'required|string|max:11|unique:employees,sodienthoai',
             'imgProfile'=>"file|image|mimes:jpeg,png,jpg,gif,svg"
         ],
     ];
@@ -42,5 +42,6 @@ class EmployeeValidator extends LaravelValidator
         'img.image' => 'Chỉ được phép là ảnh',
         'imgProfile.required' => 'Anh khong duoc de trong',
         'imgProfile.mimes' => 'Anh chi co dinh dang la jpeg,png,jpg,svg',
+        'sodienthoai.unique' => 'Số điên thoại đã bị tồn tại',
     ];
 }

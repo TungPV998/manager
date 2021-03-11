@@ -15,21 +15,22 @@ class Department extends Model implements Transformable
 {
     use TransformableTrait;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
     protected $guarded = [];
 
     protected $table="departments";
 
     public function employees(){
-        return $this->belongsToMany(Employee::class,'employeedepartment','department_id','employee_id')->using(EmplyeeDepartment::class)->withPivot('position_id');
+        return $this->belongsToMany(Employee::class,
+            'employeedepartment','department_id',
+            'employee_id')->using(EmplyeeDepartment::class)
+            ->as('ed')
+            ->withPivot('position_id');
     }
-
     public function employeedepartment()
     {
         return $this->hasMany(EmplyeeDepartment::class,'department_id');
+    }
+    public function childs() {
+        return $this->hasMany(static::class,'parent_id','id') ;
     }
 }

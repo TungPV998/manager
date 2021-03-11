@@ -1,4 +1,4 @@
-<div class="modal" id="editDepartment">
+
     <div class="modal-dialog">
         <div class="modal-content">
             <!-- Modal Header -->
@@ -13,21 +13,30 @@
                         <strong></strong>
                     </div>
                     <label for="usr">Tên phòng ban:</label>
-                    <input type="text" id="txteditPhongBan" value="{{ $view_data['parent']["tenphongban"] }}" class="form-control" name="txtPhongBan" >
+                    <input type="text" id="txteditPhongBan" value="{{ $department->tenphongban }}" class="form-control" name="txtPhongBan" >
                     <span class="invalid-feedback1" style="color: red;font-style: italic" role="alert"></span>
                 </div>
+                <div class="form-group">
+                    <label>Chọn danh mục cha:</label>
+                    <select class="form-control" id="parent_id" name="parent_id">
+                        <option value="0">Chọn danh mục cha</option>
+                        @if (isset($htmlOption))
+                            {!! $htmlOption !!}
+                        @endif
 
+                    </select>
+                </div>
             </div>
             <!-- Modal footer -->
             <div class="modal-footer">
-                <button type="button" data-url="{{route("update",['id'=>$view_data['parent']['id'],'parent_id'=>0])}}" id="btnUpdateDepartment" class="btn btn-info" >Cập nhật</button>
+                <button type="button" data-url="{{route("department.update",['id'=>$department->id]) }}" id="btnUpdateDepartment" class="btn btn-info" >Cập nhật</button>
                 <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
             </div>
 
         </div>
     </div>
-</div>
-@push('scripts')
+
+
     <script>
         $(document).ready(function () {
 
@@ -42,7 +51,8 @@
         method: "post",
         url: url,
         data: {
-            txtPhongBan: $("#txteditPhongBan").val()
+            txtPhongBan: $("#txteditPhongBan").val(),
+            parent_id: $("#parent_id").val()
         },
         headers: {
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -51,23 +61,22 @@
         })
         .done(function( msg ) {
         if(msg.status == 200){
+
+            console.log(msg);
             $('#alert-feedback').addClass('alert alert-success aler-feedback');
             $('#alert-feedback').css({"display":"block"});
             $('.aler-feedback strong').html(msg.message);
             $('.invalid-feedback1').css({"display":"none"});
+            $('.nameDepartment_'+msg.id).html(msg.nameDepartment);
 
         }else{
             $('.invalid-feedback1').html(msg.message.txtPhongBan);
             $('.invalid-feedback1').css({"display":"inline-block"});
             $('.aler-feedback').css({"display":"none"});
             $('#alert-feedback').removeClass('alert alert-success aler-feedback');
+            console.log(msg);
 }
-        $('#editDepartment').on('hidden.bs.modal', function () {
-                window.location.reload();
-            })
-        }
-
-        )
+        })
         .fail(function( err ) {
         const validator = (err.message ? err.message : "{{ "Lỗi hệ thống"  }}");
         $('.invalid-feedback1').html(validator);
@@ -77,5 +86,5 @@
         })
 
     </script>
-@endpush
+
 

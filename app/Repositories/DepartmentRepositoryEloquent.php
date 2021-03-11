@@ -15,6 +15,7 @@ use App\Validators\DepartmentValidator;
  */
 class DepartmentRepositoryEloquent extends BaseRepository implements DepartmentRepository
 {
+    public $htmlSelection='';
     protected $fieldSearchable = [
         'tenphongban'=>'like',
         'tenchucvu'=>'like',
@@ -65,4 +66,30 @@ class DepartmentRepositoryEloquent extends BaseRepository implements DepartmentR
     public function destroyDepartment($department_id){
         return \DB::table('employeedepartment')->where("department_id",$department_id)->delete();
     }
+
+    public function recursiveDepartment($parentId, $id=0, $text=''){
+        foreach ($this->makeModel()->all() as $department) {
+            if ($department["parent_id"] === $id) {
+                if(!empty($parentId) && $parentId == $department['id']){
+                    $this->htmlSelection .= "<option selected value='" . $department['id'] . "'>" . $text . $department['tenphongban'] . "</option>";
+                }
+                else {
+                    $this->htmlSelection .= "<option value='" . $department['id'] . "'>" . $text . $department['tenphongban'] . "</option>";
+                }
+                $this->recursiveDepartment($parentId,$department["id"], $text . '-');
+            }
+
+        }
+        return $this->htmlSelection;
+    }
+
+    public function getParentCatalog(){
+        return $this->makeModel()->all()->where("parent_id",0);
+    }
+    public function loadChildDepartment($id_department){
+        return $this->all()->where('parent_id', '=', $id_department);
+    }
+
+
+
 }

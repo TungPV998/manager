@@ -1,11 +1,16 @@
 
-W	php:S1481Š"5Remove this unused "$childDepartment" local variable.(ááî²şÿÿÿÿ8óíä†å.
-j	php:S1192Z"IDefine a constant instead of duplicating this literal "message" 13 times.(Ÿûÿÿÿÿ8Ú¤ºã.
-h	php:S1192X"LDefine a constant instead of duplicating this literal "tenphongban" 3 times.(ºìæµ8İÙïáã.
-z	php:S1192]"YDefine a constant instead of duplicating this literal "Táº¡o má»›i tháº¥t báº¡i" 4 times.(‚š¥Çÿÿÿÿÿ8İÙïáã.
-;php:S125›"Remove this commented out code.(¨¦ğ8•ÕÑ‰å.
-k	php:S1192<"JDefine a constant instead of duplicating this literal "parent_id" 6 times.(æÒ„ƒüÿÿÿÿ8ŸœÜä.
-i	php:S1192["HDefine a constant instead of duplicating this literal "status" 12 times.(Ş¥¶ãÿÿÿÿÿ8ôä¤ºã.
-h	php:S1192V"LDefine a constant instead of duplicating this literal "txtPhongBan" 6 times.(¬Ê¨¤8Õ”’áã.
-@php:S125¿"Remove this commented out code.(–ÀîÌüÿÿÿÿ8óíä†å.
-@php:S125­"Remove this commented out code.(—˜“—üÿÿÿÿ8´ä‡Šå.
+n	php:S1117—"LRename "$employee" which has the same name as the field declared at line 39.(çıøæıÿÿÿÿ8º˜³Éé.
+f	php:S1192M"JDefine a constant instead of duplicating this literal "employees" 3 times.(¨ºë8Æ›Ú¼ë.
+d	php:S1192h"HDefine a constant instead of duplicating this literal "message" 9 times.(èĞÇ—8¥Œşîæ.
+h	php:S1192d"LDefine a constant instead of duplicating this literal "txtPhongBan" 4 times.(¬Ê¨¤8Õ”’áã.
+f	php:S1192G"JDefine a constant instead of duplicating this literal "view_data" 4 times.(åï÷€8ËÎ™»é.
+;php:S125œ"Remove this commented out code.(ğüá©8‘Üûæ.
+;php:S125¤"Remove this commented out code.(’¾®8ËÎ™»é.
+@php:S125Ÿ"Remove this commented out code.(†İá‘üÿÿÿÿ8ËÎ™»é.
+n	php:S1117ü"LRename "$employee" which has the same name as the field declared at line 39.(çıøæıÿÿÿÿ8º˜³Éé.
+;php:S125¡"Remove this commented out code.(§óù­8ËÎ™»é.
+k	php:S1192f"JDefine a constant instead of duplicating this literal "parent_id" 4 times.(Óö™êûÿÿÿÿ8Æ›Ú¼ë.
+aphp:S112j"FDefine and throw a dedicated exception instead of using a generic one.(ƒ´ãÓ8¥Œşîæ.
+bphp:S112¥"FDefine and throw a dedicated exception instead of using a generic one.(äæ¼·8¼ÿÇşæ.
+o	php:S1192N"NDefine a constant instead of duplicating this literal "id_department" 3 times.(©ÜğÓøÿÿÿÿ8Æ›Ú¼ë.
+d	php:S1192S"HDefine a constant instead of duplicating this literal "status" 11 times.(’¬·ß8ËÎ™»é.

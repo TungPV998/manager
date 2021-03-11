@@ -22,6 +22,7 @@ class EmployeeRepositoryEloquent extends BaseRepository implements EmployeeRepos
         'ten'=>'like',
         'diachi'=>'like',
         'position.tenchucvu'=>'like',
+        'departments.id'=>'=',
 
     ];
     /**
@@ -61,11 +62,19 @@ class EmployeeRepositoryEloquent extends BaseRepository implements EmployeeRepos
     }
 
 
-    public function listEmployees($department_id){
-        return $this->with('positions')
-            ->whereHas('departments',function($sql) use($department_id){
-            return $sql->where('departments.id',$department_id);
-        }) ->paginate();
+    public function getListEmployee(){
+        return $this->with(['positions','departments'])->paginate();
+    }
+    public function getEmployeeInDepartment($id_department){
+        return  $this
+            ->whereHas('departments',function ($sql) use ($id_department){
+                return $sql->where("departments.id",$id_department);
+            })->all();
+    }
+    public function getlistEmployeeIsActiveOrNot($id_department){
+        return $this->with(["employeedepartment"=>function($sql) use($id_department){
+            $sql->where('employeedepartment.department_id',$id_department);
+        }])->paginate();
     }
 
 
