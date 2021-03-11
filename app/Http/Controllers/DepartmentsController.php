@@ -85,15 +85,6 @@ class DepartmentsController extends Controller
 
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  DepartmentCreateRequest $request
-     *
-     * @return \Illuminate\Http\Response
-     *
-     * @throws \Prettus\Validator\Exceptions\ValidatorException
-     */
     public function store(Request $request)
     {
         try {
@@ -153,15 +144,10 @@ class DepartmentsController extends Controller
             $this->validator->setId($id)->with($request->only('txtPhongBan'))->passesOrFail(DepartmentValidator::RULE_UPDATE);
             $tenphongban = $request->post('txtPhongBan');
             $parent_id = $request->post('parent_id');
-            //dd($tenphongban);
-            //dd($parent_id);
             $department = $this->repository->update(['tenphongban'=>$tenphongban,'parent_id'=>$parent_id],$id);
-           //dd();
             if ($department) {
-                //dd("ok");
                 return response()->json(['message'=> "Cập nhật thành công",'status'=>200,'nameDepartment'=>$department->tenphongban,'id'=>$department->id]);
             }
-           // dd("notok");
             throw new \Exception('Xảy ra lỗi khi cập nhật phong ban');
 
         }  catch (ValidatorException $e) {
